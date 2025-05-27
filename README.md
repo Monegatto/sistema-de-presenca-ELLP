@@ -56,7 +56,7 @@ Esse sistema tem como proposta **ser uma ferramenta de apoio à gestão das ofic
 * **Git e GitHub:** Controle de versão para gerenciar as diferentes fases do desenvolvimento e facilitar a colaboração entre os membros da equipe.
 
 ### Gerenciamento de Projeto
-* **Trello:** Organização das tarefas e atividades, promovendo a gestão ágil por meio do quadro Kanban.
+* **Github Projects:** Organização das tarefas e atividades, promovendo a gestão ágil por meio do quadro Kanban.
 * **Discord:** Comunicação entre a equipe para trocas rápidas de informações e discussões de melhorias no projeto.
 * **Google Drive:** Armazenamento e versionamento de documentação de planejamento não diretamente ligada ao desenvolvimento.
 
