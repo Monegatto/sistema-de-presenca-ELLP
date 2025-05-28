@@ -6,13 +6,13 @@ const app = express()
 const prisma = new PrismaClient().$extends(withAccelerate())
 
 async function main() {
-  const user = await prisma.user.create({
-    data: {
-      name: 'Alice',
-      email: 'alice1@prisma.io',
-    },
-  })
-  console.log(user)
+  // const user = await prisma.responsavel.create({
+  //   data: {
+  //     name: 'Alice21312',
+  //     email: 'alice123@prisma.io',
+  //   },
+  // })
+  // console.log(user)
 }
 
 main()
