@@ -17,4 +17,25 @@ export class OficinaController {
 
         return res.status(201).json(oficina)
     }
+    
+    async listar(req: Request, res: Response) {
+        const oficinas = await service.listarOficinas()
+        return res.status(200).json(oficinas)
+    }
+
+    async buscarPorId(req: Request, res: Response) {
+        const id = parseInt(req.params.id)
+
+        if (isNaN(id)) {
+            return res.status(400).json({ error: 'ID inválido' })
+        }
+
+        const oficina = await service.buscarOficinaPorId(id)
+
+        if (!oficina) {
+            return res.status(404).json({ error: 'Oficina não encontrada' })
+        }
+
+        return res.status(200).json(oficina)
+    }
 }
