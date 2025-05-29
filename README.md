@@ -112,6 +112,13 @@ O projeto segue a arquitetura **MVC (Model-View-Controller)**, organizando o có
 
 Essa organização visa facilitar a manutenção, escalabilidade e legibilidade do código ao longo do desenvolvimento.
 
+## Modelagem do Banco
+
+![ModeloLogico](https://github.com/user-attachments/assets/f9db172d-5489-42eb-a968-294afe8e2ff7)  
+Modelo Lógico
+
+![ModeloConceitual](https://github.com/user-attachments/assets/16187a3d-2473-4ecf-b66a-cae2af5f280f)
+Modelo Conceitual
 
 ## Documentação Adicional
 
