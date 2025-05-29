@@ -1,19 +1,3 @@
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
-}
-
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  Int
-}
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -22,3 +6,49 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Oficina {
+  id          Int          @id @default(autoincrement())
+  nome        String
+  dias        String?
+  coordenador String?
+  horario     String?
+  responsaveis Responsavel[]
+  alunos      Aluno[]
+  aulas       Aula[]
+}
+
+model Aluno {
+  id                Int        @id @default(autoincrement())
+  oficina           Oficina?   @relation(fields: [oficina_id], references: [id])
+  oficina_id Int?
+  presencas         Presenca[]
+}
+
+model Responsavel {
+  id            Int      @id @default(autoincrement())
+  nome_responsavel String
+  usuario        String   @unique
+  senha          String
+  oficina        Oficina? @relation(fields: [id_oficina], references: [id])
+  id_oficina     Int
+}
+
+model Aula {
+  id           Int          @id @default(autoincrement())
+  data_prevista DateTime
+  oficina      Oficina      @relation(fields: [id_oficina], references: [id])
+  id_oficina   Int
+  presencas    Presenca[]
+}
+
+model Presenca {
+  id         Int     @id @default(autoincrement())
+  id_aluno  Int
+  id_aula    Int
+  presenca   Boolean
+  observacoes String?
+  aluno      Aluno   @relation(fields: [id_aluno], references: [id])
+  aula       Aula     @relation(fields: [id_aula], references: [id])
+}
+
