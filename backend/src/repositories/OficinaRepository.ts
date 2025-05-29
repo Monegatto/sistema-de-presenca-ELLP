@@ -52,4 +52,12 @@ export class OficinaRepository {
         return oficina
     }
 
+    async delete(id: number) {
+        const oficina = await prisma.oficina.delete({
+            where: { id }
+        })
+        return oficina
+    }
+
+
 }

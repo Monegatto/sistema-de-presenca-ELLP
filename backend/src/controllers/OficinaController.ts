@@ -57,4 +57,22 @@ export class OficinaController {
         }
     }
 
+    async remover(req: Request, res: Response) {
+        const { id } = req.params
+
+        const oficinaId = Number(id)
+
+        if (isNaN(oficinaId)) {
+            return res.status(400).json({ error: 'ID inválido' })
+        }
+
+        try {
+            const oficina = await service.removerOficina(oficinaId)
+            return res.status(200).json({ message: 'Oficina removida com sucesso', oficina })
+        } catch (error) {
+            return res.status(404).json({ error: 'Oficina não encontrada' })
+        }
+    }
+
+
 }

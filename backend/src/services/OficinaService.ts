@@ -23,4 +23,10 @@ export class OficinaService {
         return oficina
     }
 
+    async removerOficina(id: number) {
+        const oficina = await this.repository.delete(id)
+        return oficina
+    }
+
+
 }
