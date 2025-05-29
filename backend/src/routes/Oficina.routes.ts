@@ -36,5 +36,14 @@ oficinaRouter.put('/oficinas/:id', async (req, res) => {
     }
 })
 
+oficinaRouter.delete('/oficinas/:id', async (req, res) => {
+    try {
+        await controller.remover(req, res)
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' })
+    }
+})
+
+
 
 export { oficinaRouter }
