@@ -28,4 +28,13 @@ oficinaRouter.get('/oficinas/:id', async (req, res) => {
     }
 })
 
+oficinaRouter.put('/oficinas/:id', async (req, res) => {
+    try {
+        await controller.editar(req, res)
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' })
+    }
+})
+
+
 export { oficinaRouter }

@@ -27,7 +27,7 @@ export class OficinaRepository {
         const result = await prisma.oficina.findMany()
         return result
     }
-    
+
     async findById(id: number): Promise<Oficina | null> {
         const result = await prisma.oficina.findUnique({
             where: { id }
@@ -42,6 +42,14 @@ export class OficinaRepository {
             result.coordenador,
             result.horario
         )
+    }
+
+    async update(id: number, data: { nome?: string, dias?: string | null, coordenador?: string | null, horario?: string | null }) {
+        const oficina = await prisma.oficina.update({
+            where: { id },
+            data
+        })
+        return oficina
     }
 
 }
