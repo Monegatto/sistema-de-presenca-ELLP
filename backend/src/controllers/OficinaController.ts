@@ -17,7 +17,7 @@ export class OficinaController {
 
         return res.status(201).json(oficina)
     }
-    
+
     async listar(req: Request, res: Response) {
         const oficinas = await service.listarOficinas()
         return res.status(200).json(oficinas)
@@ -38,4 +38,23 @@ export class OficinaController {
 
         return res.status(200).json(oficina)
     }
+
+    async editar(req: Request, res: Response) {
+        const { id } = req.params
+        const { nome, dias, coordenador, horario } = req.body
+
+        const oficinaId = Number(id)
+
+        if (isNaN(oficinaId)) {
+            return res.status(400).json({ error: 'ID inválido' })
+        }
+
+        try {
+            const oficina = await service.editarOficina(oficinaId, nome, dias, coordenador, horario)
+            return res.status(200).json(oficina)
+        } catch (error) {
+            return res.status(404).json({ error: 'Oficina não encontrada' })
+        }
+    }
+
 }

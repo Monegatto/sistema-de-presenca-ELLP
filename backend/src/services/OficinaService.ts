@@ -12,9 +12,15 @@ export class OficinaService {
     async listarOficinas() {
         return await this.repository.findAll()
     }
-    
+
     async buscarOficinaPorId(id: number): Promise<Oficina | null> {
         const oficinas = await this.repository.findAll()
         return oficinas.find(oficina => oficina.id === id) || null
     }
+
+    async editarOficina(id: number, nome?: string, dias?: string | null, coordenador?: string | null, horario?: string | null) {
+        const oficina = await this.repository.update(id, { nome, dias, coordenador, horario })
+        return oficina
+    }
+
 }
