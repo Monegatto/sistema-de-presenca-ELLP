@@ -3,7 +3,11 @@
     <div class="sidenav-content">
       <div class="sidenav-section">
         <span class="sidenav-section-title">PRESENÇA</span>
-        <button class="sidenav-btn active">
+        <button 
+          class="sidenav-btn" 
+          :class="{ active: $route.path === '/lista-presenca' }"
+          @click="navigateTo('/lista-presenca')"
+        >
           <font-awesome-icon icon="clipboard-list" class="icon" />
           Lista de Presença
         </button>
@@ -21,7 +25,11 @@
       </div>
       <div class="sidenav-section">
         <span class="sidenav-section-title">RELATORIO</span>
-        <button class="sidenav-btn">
+        <button 
+          class="sidenav-btn"
+          :class="{ active: $route.path === '/relatorio-presenca' }"
+          @click="navigateTo('/relatorio-presenca')"
+        >
           <font-awesome-icon icon="graduation-cap" class="icon" />
           Relatorio
         </button>
@@ -31,8 +39,23 @@
 </template>
 
 <script>
+import { useRouter, useRoute } from 'vue-router';
+
 export default {
   name: 'SideNav',
+  setup() {
+    const router = useRouter();
+    const route = useRoute();
+
+    const navigateTo = (path) => {
+      router.push(path);
+    };
+
+    return {
+      navigateTo,
+      currentPath: route.path,
+    };
+  },
 };
 </script>
 
@@ -109,12 +132,3 @@ export default {
   margin-top: 12px;
 }
 </style>
-
-<!--
-Ícones usados:
-- fa-clipboard-list
-- fa-chalkboard
-- fa-user-graduate
-- fa-graduation-cap
-Você pode usar o FontAwesome CDN ou outro pacote de ícones SVG.
--->
