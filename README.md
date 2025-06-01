@@ -125,7 +125,7 @@ Modelo Conceitual
 * [Documentação do Vue.js](https://vuejs.org/)
 * [Documentação do Vuetify](https://vuetifyjs.com/)
 * [Documentação do Projeto](https://docs.google.com/document/d/1AOV5VbKBeztEs_ue7OdyKU5Ud0U3gnlGyvixVEJ7Lbc/edit?usp=sharing)
-
+* [Figma do Projeto](https://www.figma.com/design/ZVFf0QR1Qr5ZSUeeGhsYPM/Oficina-2?node-id=314-1339&t=HcfhPwbzFZ85YmCs-1)
 ## Licença
 
 Este projeto está licenciado sob a Licença MIT. Consulte o arquivo [LICENSE](LICENSE) para obter mais detalhes.
