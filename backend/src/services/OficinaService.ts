@@ -15,7 +15,7 @@ export class OficinaService {
 
     async buscarOficinaPorId(id: number): Promise<Oficina | null> {
         const oficinas = await this.repository.findAll()
-        return oficinas.find(oficina => oficina.id === id) || null
+        return oficinas.find((oficina: { id: number }) => oficina.id === id) || null
     }
 
     async editarOficina(id: number, nome?: string, dias?: string | null, coordenador?: string | null, horario?: string | null) {

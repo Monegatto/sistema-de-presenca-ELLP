@@ -1,11 +1,15 @@
 import { Oficina } from '../models/Oficina'
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
 
 export class OficinaRepository {
+    private prisma: any;
+
+    constructor(prismaInstance?: any) {
+        this.prisma = prismaInstance || new PrismaClient();
+    }
     async create(oficina: Omit<Oficina, 'id'>): Promise<Oficina> {
-        const result = await prisma.oficina.create({
+        const result = await this.prisma.oficina.create({
             data: {
                 nome: oficina.nome,
                 dias: oficina.dias,
@@ -24,12 +28,12 @@ export class OficinaRepository {
     }
 
     async findAll() {
-        const result = await prisma.oficina.findMany()
+        const result = await this.prisma.oficina.findMany()
         return result
     }
 
     async findById(id: number): Promise<Oficina | null> {
-        const result = await prisma.oficina.findUnique({
+        const result = await this.prisma.oficina.findUnique({
             where: { id }
         })
 
@@ -45,7 +49,7 @@ export class OficinaRepository {
     }
 
     async update(id: number, data: { nome?: string, dias?: string | null, coordenador?: string | null, horario?: string | null }) {
-        const oficina = await prisma.oficina.update({
+        const oficina = await this.prisma.oficina.update({
             where: { id },
             data
         })
@@ -53,7 +57,7 @@ export class OficinaRepository {
     }
 
     async delete(id: number) {
-        const oficina = await prisma.oficina.delete({
+        const oficina = await this.prisma.oficina.delete({
             where: { id }
         })
         return oficina
