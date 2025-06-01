@@ -32,4 +32,20 @@ export class AlunoRepository {
       include: { oficina: true }
     })
   }
+
+  async update(id: number, nome: string, oficina_id: number) {
+    return await prisma.aluno.update({
+      where: { id },
+      data: {
+        nome,
+        oficina_id
+      }
+    })
+  }
+
+  async delete(id: number) {
+    return await prisma.aluno.delete({
+      where: { id }
+    })
+  }
 }
