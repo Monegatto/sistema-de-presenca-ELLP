@@ -3,8 +3,8 @@ import { AlunoRepository } from "../repositories/AlunoRepository"
 export class AlunoService {
   private repository = new AlunoRepository()
 
-  async criarAluno(oficina_id: number, nome: string) {
-    const aluno = await this.repository.create(oficina_id, nome)
+  async criarAluno(nome: string, oficina_id?: number) {
+    const aluno = await this.repository.create(nome, oficina_id)
     return aluno
   }
 

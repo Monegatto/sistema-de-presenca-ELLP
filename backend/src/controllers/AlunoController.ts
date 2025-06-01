@@ -5,13 +5,13 @@ const service = new AlunoService()
 
 export class AlunoController {
   async criar(req: Request, res: Response) {
-    const { oficina_id, nome } = req.body
+    const { nome, oficina_id } = req.body
 
-    if (!oficina_id || !nome) {
-      return res.status(400).json({ error: 'oficina_id e nome são obrigatórios' })
+    if (!nome) {
+      return res.status(400).json({ error: 'nome é obrigatório' })
     }
 
-    const aluno = await service.criarAluno(oficina_id, nome)
+    const aluno = await service.criarAluno(nome, oficina_id)
     return res.status(201).json(aluno)
   }
 
@@ -56,8 +56,8 @@ export class AlunoController {
       return res.status(400).json({ error: 'ID inválido' })
     }
 
-    if (!nome || !oficina_id) {
-      return res.status(400).json({ error: 'nome e oficina_id são obrigatórios' })
+    if (!nome) {
+      return res.status(400).json({ error: 'nome é obrigatório' })
     }
 
     const alunoExistente = await service.buscarPorId(id)

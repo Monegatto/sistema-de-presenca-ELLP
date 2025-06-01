@@ -7,7 +7,7 @@ export class AlunoRepository {
         this.prisma = prismaInstance || new PrismaClient();
     }
 
-    async create(oficina_id: number, nome: string) {
+    async create(nome: string, oficina_id?: number) {
         const result = await this.prisma.aluno.create({
             data: {
                 nome,

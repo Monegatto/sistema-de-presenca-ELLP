@@ -13,7 +13,7 @@ describe('AlunoRepository', () => {
 
         prisma.aluno.create.mockResolvedValue(alunoMock)
 
-        const result = await repository.create(2, 'Carlos')
+        const result = await repository.create('Carlos', 2)
 
         expect(prisma.aluno.create).toHaveBeenCalledWith({
             data: {
