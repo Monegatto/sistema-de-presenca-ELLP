@@ -19,4 +19,12 @@ export class AlunoService {
   async listarPorOficina(oficina_id: number) {
     return await this.repository.findByOficina(oficina_id)
   }
+
+  async editarAluno(id: number, nome: string, oficina_id: number) {
+    return await this.repository.update(id, nome, oficina_id)
+  }
+
+  async removerAluno(id: number) {
+    return await this.repository.delete(id)
+  }
 }

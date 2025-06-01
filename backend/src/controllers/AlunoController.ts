@@ -47,4 +47,43 @@ export class AlunoController {
 
     return res.status(200).json(alunos)
   }
+
+  async editar(req: Request, res: Response) {
+    const id = Number(req.params.id)
+    const { nome, oficina_id } = req.body
+
+    if (isNaN(id)) {
+      return res.status(400).json({ error: 'ID inválido' })
+    }
+
+    if (!nome || !oficina_id) {
+      return res.status(400).json({ error: 'nome e oficina_id são obrigatórios' })
+    }
+
+    const alunoExistente = await service.buscarPorId(id)
+
+    if (!alunoExistente) {
+      return res.status(404).json({ error: 'Aluno não encontrado' })
+    }
+
+    const aluno = await service.editarAluno(id, nome, oficina_id)
+    return res.status(200).json(aluno)
+  }
+
+  async remover(req: Request, res: Response) {
+    const id = Number(req.params.id)
+
+    if (isNaN(id)) {
+      return res.status(400).json({ error: 'ID inválido' })
+    }
+
+    const alunoExistente = await service.buscarPorId(id)
+
+    if (!alunoExistente) {
+      return res.status(404).json({ error: 'Aluno não encontrado' })
+    }
+
+    await service.removerAluno(id)
+    return res.status(204).send()
+  }
 }
