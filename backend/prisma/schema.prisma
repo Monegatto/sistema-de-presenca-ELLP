@@ -20,6 +20,7 @@ model Oficina {
 
 model Aluno {
   id                Int        @id @default(autoincrement())
+  nome              String
   oficina           Oficina?   @relation(fields: [oficina_id], references: [id])
   oficina_id Int?
   presencas         Presenca[]
