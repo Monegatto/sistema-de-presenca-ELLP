@@ -19,4 +19,32 @@ export class AlunoController {
     const alunos = await service.listarAlunos()
     return res.status(200).json(alunos)
   }
+
+  async buscarPorId(req: Request, res: Response) {
+    const id = Number(req.params.id)
+
+    if (isNaN(id)) {
+      return res.status(400).json({ error: 'ID inválido' })
+    }
+
+    const aluno = await service.buscarPorId(id)
+
+    if (!aluno) {
+      return res.status(404).json({ error: 'Aluno não encontrado' })
+    }
+
+    return res.status(200).json(aluno)
+  }
+
+  async listarPorOficina(req: Request, res: Response) {
+    const oficinaId = Number(req.params.oficinaId)
+
+    if (isNaN(oficinaId)) {
+      return res.status(400).json({ error: 'ID de oficina inválido' })
+    }
+
+    const alunos = await service.listarPorOficina(oficinaId)
+
+    return res.status(200).json(alunos)
+  }
 }
