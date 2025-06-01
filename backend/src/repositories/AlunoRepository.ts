@@ -21,7 +21,15 @@ export class AlunoRepository {
 
     async findById(id: number) {
         return await prisma.aluno.findUnique({
-            where: { id }
+            where: { id },
+            include: { oficina: true }
         })
     }
+
+  async findByOficina(oficina_id: number) {
+    return await prisma.aluno.findMany({
+      where: { oficina_id },
+      include: { oficina: true }
+    })
+  }
 }

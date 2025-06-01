@@ -11,4 +11,12 @@ export class AlunoService {
   async listarAlunos() {
     return await this.repository.findAll()
   }
+
+  async buscarPorId(id: number) {
+    return await this.repository.findById(id)
+  }
+
+  async listarPorOficina(oficina_id: number) {
+    return await this.repository.findByOficina(oficina_id)
+  }
 }
