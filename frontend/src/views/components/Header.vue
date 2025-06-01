@@ -15,7 +15,8 @@
     height: 60px;
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    box-shadow: 0 2px 16px rgb(60, 60, 60, 0.10);
+    z-index: 1000;
 }
 
 .header-title {
