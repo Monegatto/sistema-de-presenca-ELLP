@@ -39,6 +39,7 @@ const router = useRouter();
 function handleLogin() {
   // Apenas redireciona para a próxima página (sem login)
   router.push('/lista-presenca');
+  const hideLayout = ref(false);
 }
 </script>
 
