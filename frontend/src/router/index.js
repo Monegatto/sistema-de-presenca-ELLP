@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../views/Login.vue';
 import ListaDePresenças from '@/views/ListaDePresenca.vue';
+import OficinasHome from '@/views/OficinasHome.vue';
+import AlunosHome from '@/views/AlunosHome.vue';
 
 const routes = [
   {
@@ -12,6 +14,16 @@ const routes = [
     path: '/lista-presenca',
     name: 'lista-presenca',
     component: ListaDePresenças,
+  },
+  {
+    path: '/oficinas',
+    name: 'oficinas',
+    component: OficinasHome,
+  },
+  {
+    path: '/alunos',
+    name: 'alunos',
+    component: AlunosHome,
   }
 ];
 

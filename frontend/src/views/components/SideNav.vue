@@ -3,21 +3,21 @@
     <div class="sidenav-content">
       <div class="sidenav-section">
         <span class="sidenav-section-title">PRESENÇA</span>
-        <button class="sidenav-btn active">
+        <router-link to="/lista-presenca" class="sidenav-btn" :class="{ active: activeIndex === 0 }" @click="setActive(0)">
           <font-awesome-icon icon="clipboard-list" class="icon" />
           Lista de Presença
-        </button>
+        </router-link>
       </div>
       <div class="sidenav-section">
         <span class="sidenav-section-title">CADASTRO</span>
-        <button class="sidenav-btn">
-            <font-awesome-icon icon="chalkboard-teacher" class="icon" />
+        <router-link to="/oficinas" class="sidenav-btn" :class="{ active: activeIndex === 1 }" @click="setActive(1)">
+          <font-awesome-icon icon="chalkboard-teacher" class="icon" />
           Oficinas
-        </button>
-        <button class="sidenav-btn">
-            <font-awesome-icon icon="user-graduate" class="icon" />
+        </router-link>
+        <router-link to="/alunos" class="sidenav-btn" :class="{ active: activeIndex === 2 }" @click="setActive(2)">
+          <font-awesome-icon icon="clipboard-list" class="icon" />
           Alunos
-        </button>
+        </router-link>
       </div>
       <div class="sidenav-section">
         <span class="sidenav-section-title">RELATORIO</span>
@@ -33,6 +33,16 @@
 <script>
 export default {
   name: 'SideNav',
+  data() {
+    return {
+      activeIndex: null
+    };
+  },
+  methods: {
+    setActive(index) {
+      this.activeIndex = index;
+    }
+  }
 };
 </script>
 
@@ -86,6 +96,7 @@ export default {
   box-shadow: 0 1px 6px rgba(60, 60, 60, 0.1);
   cursor: pointer;
   transition: background 0.15s, box-shadow 0.15s;
+  text-decoration: none;
 }
 
 .sidenav-btn:not(.active):hover {
@@ -109,12 +120,3 @@ export default {
   margin-top: 12px;
 }
 </style>
-
-<!--
-Ícones usados:
-- fa-clipboard-list
-- fa-chalkboard
-- fa-user-graduate
-- fa-graduation-cap
-Você pode usar o FontAwesome CDN ou outro pacote de ícones SVG.
--->
