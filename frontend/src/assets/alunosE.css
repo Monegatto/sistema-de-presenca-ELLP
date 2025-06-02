@@ -102,7 +102,7 @@ button.save {
   transition: background 0.2s ease;
   align-self: flex-end;
 }
-button.cancell {
+button.delete {
   padding: 10px 22px;
   background-color: #DC3545;
   color: white;

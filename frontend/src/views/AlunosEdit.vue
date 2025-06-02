@@ -1,6 +1,6 @@
 <template>
   <div class="main-content">
-    <h2 class="page-title">Modificar Aluno</h2>
+    <h2 class="page-title">Editar Aluno</h2>
     <div class="content-box">
       <form class="form-group" @submit.prevent="editarAluno">
         <div class="form-fields">
@@ -15,8 +15,8 @@
         </div>
 
         <div class="form-actions">
-          <button class="save" type="submit">Salvar</button>
-          <button class="cancell" type="button" @click="voltar">Cancelar</button>
+          <button class="new" type="submit">Salvar Alterações</button>
+          <button class="delete" type="button" @click="removerAluno">Apagar</button>
         </div>
       </form>
     </div>
@@ -73,11 +73,20 @@ export default {
         alert('Erro ao salvar alterações!');
       }
     },
-    voltar() {
-      this.$router.back();
+    async removerAluno() {
+      const id = this.$route.params.id;
+      const confirmar = confirm('Tem certeza que deseja remover este aluno?'); //Temporario até a adição do modal
+      if (!confirmar) return;
+
+      try {
+        await axios.delete(`http://localhost:3333/alunos/${id}`);
+        this.$router.push({ name: 'alunos' });
+      } catch (err) {
+        alert('Erro ao remover aluno!');
+      }
     }
   }
 };
 </script>
 
-<style scoped src="../assets/alunosE.css"></style>
+<style scoped src="../assets/oficinaN.css"></style>
