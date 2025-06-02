@@ -3,28 +3,42 @@
     <div class="sidenav-content">
       <div class="sidenav-section">
         <span class="sidenav-section-title">PRESENÇA</span>
-        <router-link to="/lista-presenca" class="sidenav-btn" :class="{ active: activeIndex === 0 }" @click="setActive(0)">
+        <router-link 
+          to="/lista-presenca" 
+          class="sidenav-btn"
+        >
           <font-awesome-icon icon="clipboard-list" class="icon" />
           Lista de Presença
         </router-link>
       </div>
+
       <div class="sidenav-section">
         <span class="sidenav-section-title">CADASTRO</span>
-        <router-link to="/oficinas" class="sidenav-btn" :class="{ active: activeIndex === 1 }" @click="setActive(1)">
+        <router-link 
+          to="/oficinas" 
+          class="sidenav-btn"
+        >
           <font-awesome-icon icon="chalkboard-teacher" class="icon" />
           Oficinas
         </router-link>
-        <router-link to="/alunos" class="sidenav-btn" :class="{ active: activeIndex === 2 }" @click="setActive(2)">
-          <font-awesome-icon icon="clipboard-list" class="icon" />
+        <router-link 
+          to="/alunos" 
+          class="sidenav-btn"
+        >
+          <font-awesome-icon icon="user-graduate" class="icon" />
           Alunos
         </router-link>
       </div>
+
       <div class="sidenav-section">
-        <span class="sidenav-section-title">RELATORIO</span>
-        <button class="sidenav-btn">
+        <span class="sidenav-section-title">RELATÓRIO</span>
+        <router-link 
+          to="/relatorio-presenca" 
+          class="sidenav-btn"
+        >
           <font-awesome-icon icon="graduation-cap" class="icon" />
-          Relatorio
-        </button>
+          Relatório
+        </router-link>
       </div>
     </div>
   </nav>
@@ -32,17 +46,7 @@
 
 <script>
 export default {
-  name: 'SideNav',
-  data() {
-    return {
-      activeIndex: null
-    };
-  },
-  methods: {
-    setActive(index) {
-      this.activeIndex = index;
-    }
-  }
+  name: 'SideNav'
 };
 </script>
 
@@ -99,12 +103,14 @@ export default {
   text-decoration: none;
 }
 
-.sidenav-btn:not(.active):hover {
+/* Estilo de hover */
+.sidenav-btn:not(.router-link-active):hover {
   background: #f5f8fd;
   box-shadow: 0 2px 12px rgba(60, 60, 60, 0.09);
 }
 
-.sidenav-btn.active {
+/* Estilo de botão ativo automaticamente aplicado pelo Vue Router */
+.sidenav-btn.router-link-active {
   background: #f5f8fd;
   color: #2266cc;
   box-shadow: 0 2px 12px rgba(34, 102, 204, 0.12);

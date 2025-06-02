@@ -7,7 +7,7 @@
                 <font-awesome-icon icon="search" class="search-icon" />
             </div>
             <div>
-                <button class="new">
+                <button class="new" @click="handleRoute">
                     Nova Oficina
                 </button>
             </div>
@@ -66,6 +66,9 @@ export default {
                 console.error('Erro ao carregar oficinas:', error);
                 this.oficinas = [];
             }
+        },
+        handleRoute() {
+            this.$router.push({ name: 'oficinas-nova' });
         }
     }
 };
