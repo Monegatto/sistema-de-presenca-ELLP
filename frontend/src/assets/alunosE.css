@@ -41,9 +41,10 @@
 
 .form-actions {
   display: flex;
-  align-items: flex-start;
+  align-items: space-between;
   justify-content: flex-end;
   min-width: 150px;
+
 }
 
 .form-fields input[type="text"],
@@ -90,24 +91,6 @@
   background-color: #e0e0e0;
 }
 
-button.new {
-  padding: 10px 22px;
-  background-color: #4154F1;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  align-self: flex-end;
-}
-
-button.new:hover {
-  background-color: #2c3ebd;
-}
-select:invalid {
-  color: #9ca3af;
-}
 button.save {
   padding: 10px 22px;
   background-color: #198754;
@@ -130,4 +113,12 @@ button.cancell {
   transition: background 0.2s ease;
   align-self: flex-end;
   margin-left: 25px;
+}
+
+
+button.new:hover {
+  background-color: #2c3ebd;
+}
+select:invalid {
+  color: #9ca3af;
 }

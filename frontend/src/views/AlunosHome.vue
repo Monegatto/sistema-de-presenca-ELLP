@@ -7,7 +7,7 @@
                 <font-awesome-icon icon="search" class="search-icon" />
             </div>
             <div>
-                <button class="new" @click="handleRoute">
+                <button class="new" @click="handleRouteNew">
                     Novo Aluno
                 </button>
             </div>
@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(aluno, index) in filteredAlunos" :key="aluno.id">
+                    <tr v-for="(aluno, index) in filteredAlunos" :key="aluno.id" @click="handleRouteEdit(aluno.id)">
                         <td class="number">{{ index + 1 }}</td>
                         <td class="default">{{ aluno.nome }}</td>
                         <td class="default">{{ aluno.id }}</td>
@@ -67,8 +67,11 @@ export default {
                 this.alunos = [];
             }
         },
-        handleRoute() {
+        handleRouteNew() {
             this.$router.push({ name: 'alunos-novo' });
+        },
+        handleRouteEdit(id) {
+            this.$router.push({ name: 'alunos-editar', params: { id } });
         }
     }
 };

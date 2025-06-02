@@ -6,6 +6,7 @@ import AlunosHome from '@/views/AlunosHome.vue';
 import OficinasNew from '@/views/OficinaNew.vue';
 import AlunosNew from '@/views/AlunosNew.vue';
 import OficinasEdit from '@/views/OficinaEdit.vue';
+import AlunosEdit from '@/views/AlunosEdit.vue';
 
 const routes = [
   {
@@ -42,6 +43,11 @@ const routes = [
     path: '/oficinas-editar/:id',
     name: 'oficinas-editar',
     component: OficinasEdit
+  },
+  {
+    path: '/alunos-editar/:id',
+    name: 'alunos-editar',
+    component: AlunosEdit
   },
 ];
 

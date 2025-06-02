@@ -1,6 +1,6 @@
 <template>
   <div class="main-content">
-    <h2 class="page-title">Editar Oficina</h2>
+    <h2 class="page-title">Modificar Oficina</h2>
     <div class="content-box">
       <form class="form-group" @submit.prevent="editarOficina">
         <div class="form-fields">
@@ -24,7 +24,8 @@
         </div>
 
         <div class="form-actions">
-          <button class="new" type="submit">Salvar Alterações</button>
+          <button class="save" type="submit">Salvar</button>
+          <button class="cancell" type="button" @click="voltar">Cancelar</button>
         </div>
       </form>
     </div>
@@ -82,6 +83,9 @@ export default {
       } catch (error) {
         alert('Erro ao salvar alterações!');
       }
+    },
+    voltar() {
+      this.$router.back();
     }
   }
 };
