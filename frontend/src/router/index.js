@@ -4,6 +4,7 @@ import ListaDePresenças from '@/views/ListaDePresenca.vue';
 import OficinasHome from '@/views/OficinasHome.vue';
 import AlunosHome from '@/views/AlunosHome.vue';
 import OficinasNew from '@/views/OficinaNew.vue';
+import AlunosNew from '@/views/AlunosNew.vue';
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/oficinas-nova',
     name: 'oficinas-nova',
     component: OficinasNew
+  },
+  {
+    path: '/alunos-novo',
+    name: 'alunos-novo',
+    component: AlunosNew
   }
 ];
 

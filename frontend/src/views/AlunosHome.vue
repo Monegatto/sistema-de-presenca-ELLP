@@ -7,7 +7,7 @@
                 <font-awesome-icon icon="search" class="search-icon" />
             </div>
             <div>
-                <button class="new">
+                <button class="new" @click="handleRoute">
                     Novo Aluno
                 </button>
             </div>
@@ -66,6 +66,9 @@ export default {
                 console.error('Erro ao carregar alunos:', error);
                 this.alunos = [];
             }
+        },
+        handleRoute() {
+            this.$router.push({ name: 'alunos-novo' });
         }
     }
 };
