@@ -5,6 +5,7 @@ import OficinasHome from '@/views/OficinasHome.vue';
 import AlunosHome from '@/views/AlunosHome.vue';
 import OficinasNew from '@/views/OficinaNew.vue';
 import AlunosNew from '@/views/AlunosNew.vue';
+import OficinasEdit from '@/views/OficinaEdit.vue';
 
 const routes = [
   {
@@ -36,7 +37,12 @@ const routes = [
     path: '/alunos-novo',
     name: 'alunos-novo',
     component: AlunosNew
-  }
+  },
+  {
+    path: '/oficinas-editar/:id',
+    name: 'oficinas-editar',
+    component: OficinasEdit
+  },
 ];
 
 const router = createRouter({
