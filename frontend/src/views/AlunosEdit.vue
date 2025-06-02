@@ -15,7 +15,7 @@
         </div>
 
         <div class="form-actions">
-          <button class="new" type="submit">Salvar Alterações</button>
+          <button class="save" type="submit">Salvar Alterações</button>
           <button class="delete" type="button" @click="removerAluno">Apagar</button>
         </div>
       </form>
@@ -89,4 +89,4 @@ export default {
 };
 </script>
 
-<style scoped src="../assets/oficinaN.css"></style>
+<style scoped src="../assets/alunosE.css"></style>

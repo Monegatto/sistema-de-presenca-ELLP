@@ -7,6 +7,7 @@ import OficinasNew from '@/views/OficinaNew.vue';
 import AlunosNew from '@/views/AlunosNew.vue';
 import OficinasEdit from '@/views/OficinaEdit.vue';
 import AlunosEdit from '@/views/AlunosEdit.vue';
+import RelatorioPresenca from '@/views/RelatorioPresenca.vue';
 
 const routes = [
   {
@@ -49,6 +50,11 @@ const routes = [
     name: 'alunos-editar',
     component: AlunosEdit
   },
+  {
+    path: '/relatorio-presenca',
+    name: 'relatorio-presenca',
+    component: RelatorioPresenca
+  }
 ];
 
 const router = createRouter({

@@ -41,6 +41,7 @@ Esse sistema tem como proposta **ser uma ferramenta de apoio à gestão das ofic
 
 ### Banco de Dados
 * **PostgreSQL:** Utilizado para a autenticação dos usuários e armazenamento de dados, oferecendo segurança e facilidade de integração com a plataforma.
+* **Prisma:** Ferramenta para hospedar o banco de dados PostgreSQL.
 
 ### Backend
 * **Node.js com Express:** Plataforma de desenvolvimento do servidor, permitindo a construção da API que servirá de base para comunicação com o frontend.
@@ -78,10 +79,10 @@ Para configurar o ambiente de desenvolvimento, siga os passos abaixo:
 2. **Instalar as dependências:**
 
     ```bash
-    yarn install
+    npm install
     ```
 
-3. **Configurar o Firebase:**
+3. **Executar as migrations do prisma:**
 
     Crie um arquivo `.env` na raiz do projeto com base no arquivo `.env.example`:
 
@@ -92,18 +93,13 @@ Para configurar o ambiente de desenvolvimento, siga os passos abaixo:
     Abra o arquivo `.env` e substitua os valores de exemplo pelas suas credenciais do Firebase:
 
     ```env
-    VUE_APP_FIREBASE_API_KEY=your_firebase_api_key
-    VUE_APP_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-    VUE_APP_FIREBASE_PROJECT_ID=your_firebase_project_id
-    VUE_APP_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
-    VUE_APP_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
-    VUE_APP_FIREBASE_APP_ID=your_firebase_app_id
+    DATABASE_URL="Database_url"
     ```
 
 4. **Executar o Projeto:**
 
     ```bash
-    yarn dev
+    npm run dev
     ```
 
 ## Estrutura do Projeto
@@ -114,7 +110,7 @@ Essa organização visa facilitar a manutenção, escalabilidade e legibilidade 
 
 ## Modelagem do Banco
 
-![ModeloLogico](https://github.com/user-attachments/assets/f9db172d-5489-42eb-a968-294afe8e2ff7)  
+![ModeloLogico](https://github.com/user-attachments/assets/1b9aea2c-fa1b-4be5-a407-c9e3e29a539e)
 Modelo Lógico
 
 ![ModeloConceitual](https://github.com/user-attachments/assets/16187a3d-2473-4ecf-b66a-cae2af5f280f)
