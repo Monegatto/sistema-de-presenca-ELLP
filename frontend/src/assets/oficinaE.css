@@ -1,0 +1,133 @@
+.main-content {
+  padding: 40px;
+  background: #f3f4f6;
+  min-height: 100vh;
+}
+
+.page-title {
+  font-size: 20px;
+  color: #4154F1;
+  margin-bottom: 32px;
+}
+
+.content-box {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(60, 60, 60, 0.06);
+  padding: 40px;
+  max-width: 90%;
+  min-width: 320px;
+  min-height: 50%;
+  margin: auto;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  gap: 40px;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  width: 30%;
+}
+
+.form-actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-width: 150px;
+}
+
+.form-fields input[type="text"],
+.form-fields select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: #fff;
+  box-shadow: 0 0 0 2px transparent;
+  transition: box-shadow 0.2s ease;
+}
+
+.form-fields input[type="text"]:focus,
+.form-fields select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #4154F1;
+}
+
+.dia-select-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.dia-select-group select {
+  flex: 1;
+}
+
+.dia-select-group button {
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  color: #2c3ebd;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dia-select-group button:hover {
+  background-color: #e0e0e0;
+}
+
+button.new {
+  padding: 10px 22px;
+  background-color: #4154F1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  align-self: flex-end;
+}
+
+button.new:hover {
+  background-color: #2c3ebd;
+}
+select:invalid {
+  color: #9ca3af;
+}
+button.save {
+  padding: 10px 22px;
+  background-color: #198754;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  align-self: flex-end;
+}
+button.delete {
+  padding: 10px 22px;
+  background-color: #DC3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  align-self: flex-end;
+  margin-left: 25px;
+}

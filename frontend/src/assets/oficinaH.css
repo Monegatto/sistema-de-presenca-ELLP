@@ -1,0 +1,131 @@
+.main-content {
+    padding: 40px 0 0 40px;
+    background: #f3f4f6;
+  
+}
+
+.page-title {
+    font-size: 20px;
+    color: #4154F1;
+    margin-bottom: 32px;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(60, 60, 60, 0.06);
+    padding: 24px;
+    max-width: 90%;
+    min-width: 320px;
+    margin-bottom: 5%;
+}
+.search-box {
+    display: flex;
+    position: relative;
+    width: 25%;
+    max-width: 250px;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    align-items: center;
+}
+
+.content-box {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(60, 60, 60, 0.06);
+    padding: 32px 24px;
+    max-width: 90%;
+    min-width: 320px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+.form-group select,
+.form-group input[type="date"] {
+    padding: 8px 12px;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    font-size: 15px;
+    background: #fafbfc;
+}
+
+.btn-filtrar {
+    background: #2266cc;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 22px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-filtrar:hover {
+    background: #174a99;
+}
+
+.search-input{
+    border: 0px;
+    font-size: 14px;
+    outline: none;
+    padding-left: 10px;
+}
+
+.search-icon {
+   position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+}
+.new{
+    padding: 8px 16px;
+    background-color: #4154F1;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table thead {
+    background: #DFDFDF88;
+}
+
+.table th{
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 12px;
+    color: #444444;
+}
+.table td {
+    padding: 12px;
+    font-size: 14px;
+    color: #7D7D7D;
+}
+.number{
+    width: 10%;
+}
+:default{
+    width: 30%;
+}
+td.number{
+    font-size: 12px;
+}
+td.default{
+    font-size: 12px;
+}
