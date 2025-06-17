@@ -20,4 +20,17 @@ export class ProfessorController {
       return res.status(500).json({ error: 'Erro ao criar professor', detail: error })
     }
   }
+
+  async remover(req: Request, res: Response) {
+    const id = Number(req.params.id)
+    if (isNaN(id)) {
+      return res.status(400).json({ error: 'ID inválido' })
+    }
+    try {
+      await service.removerProfessor(id)
+      return res.status(204).send()
+    } catch (error) {
+      return res.status(404).json({ error: 'Professor não encontrado' })
+    }
+  }
 }

@@ -19,4 +19,10 @@ export class ProfessorRepository {
             },
         })
     }
+
+    async delete(id: number) {
+        return await this.prisma.professor.delete({
+            where: { id }
+        })
+    }
 }
