@@ -12,4 +12,12 @@ professorRouter.post('/professores', async (req, res) => {
     }
 })
 
+professorRouter.delete('/professores/:id', async (req, res) => {
+    try {
+        await controller.remover(req, res)
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' })
+    }
+})
+
 export { professorRouter }
