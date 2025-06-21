@@ -1,6 +1,6 @@
 import express from 'express'
 import { oficinaRouter } from './routes/Oficina.routes'
-import { alunoRouter } from './routes/Alunos.routes'
+import { studentRouter } from './routes/Student.routes'
 import { professorRouter } from './routes/Professor.routes'
 import { authRouter } from './routes/Auth.routes'
 
@@ -11,7 +11,7 @@ app
   .use(express.json())
   .use(cors())
   .use(oficinaRouter)
-  .use(alunoRouter)
+  .use(studentRouter)
   .use(professorRouter)
   .use(authRouter)
 
