@@ -1,10 +1,12 @@
 import { Router } from 'express'
 import { AlunoController } from '../controllers/AlunoController'
+import { authenticateToken } from '../middlewares/authMiddleware'
+import './types/express'
 
 const alunoRouter = Router()
 const controller = new AlunoController()
 
-alunoRouter.post('/alunos', async (req, res) => {
+alunoRouter.post('/alunos', authenticateToken, async (req, res) => {
 	try {
 		await controller.criar(req, res);
 	} catch (error) {
