@@ -1,6 +1,8 @@
+/// <reference path="../types/express/index.d.ts" />
 import { Request, Response, NextFunction } from 'express'
 import jwt, { JwtPayload } from 'jsonwebtoken'
-import 'dotenv/config'
+import dotenv from 'dotenv'
+dotenv.config()
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
     const SECRET_KEY = process.env.SECRET_KEY

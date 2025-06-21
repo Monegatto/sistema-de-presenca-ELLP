@@ -1,7 +1,7 @@
+/// <reference path="../types/express/index.d.ts" />
 import { Router } from 'express'
 import { AlunoController } from '../controllers/AlunoController'
 import { authenticateToken } from '../middlewares/authMiddleware'
-import './types/express'
 
 const alunoRouter = Router()
 const controller = new AlunoController()
