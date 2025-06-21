@@ -7,58 +7,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Oficina {
+model Workshop {
   id           Int           @id @default(autoincrement())
-  nome         String
-  dias         String?
-  coordenador  String?
-  horario      String?
-  responsaveis Responsavel[]
-  alunos       Aluno[]
-  aulas        Aula[]
-  Professor    Professor[]
+  name         String
+  weekdays     String?
+  coordinator  String?
+  startTime    String?
+  responsibles Responsible[]
+  students     Student[]
+  classes      Class[]
+  teachers     Teacher[]
 }
 
-model Aluno {
-  id         Int        @id @default(autoincrement())
-  nome       String
-  oficina    Oficina?   @relation(fields: [oficina_id], references: [id])
-  oficina_id Int?
-  presencas  Presenca[]
+model Student {
+  id           Int        @id @default(autoincrement())
+  name         String
+  workshop     Workshop?  @relation(fields: [workshop_id], references: [id])
+  workshop_id  Int?
+  attendance   Attendance[]
 }
 
-model Responsavel {
-  id               Int      @id @default(autoincrement())
-  nome_responsavel String
-  usuario          String   @unique
-  senha            String
-  oficina          Oficina? @relation(fields: [id_oficina], references: [id])
-  id_oficina       Int
+model Responsible {
+  id             Int      @id @default(autoincrement())
+  name           String
+  username       String   @unique
+  password       String
+  workshop       Workshop @relation(fields: [workshop_id], references: [id])
+  workshop_id    Int
 }
 
-model Aula {
-  id            Int        @id @default(autoincrement())
-  data_prevista DateTime
-  oficina       Oficina    @relation(fields: [id_oficina], references: [id])
-  id_oficina    Int
-  presencas     Presenca[]
+model Class {
+  id             Int        @id @default(autoincrement())
+  scheduledDate  DateTime
+  workshop       Workshop   @relation(fields: [workshop_id], references: [id])
+  workshop_id    Int
+  attendance     Attendance[]
 }
 
-model Presenca {
-  id          Int     @id @default(autoincrement())
-  id_aluno    Int
-  id_aula     Int
-  presenca    Boolean
-  observacoes String?
-  aluno       Aluno   @relation(fields: [id_aluno], references: [id])
-  aula        Aula    @relation(fields: [id_aula], references: [id])
+model Attendance {
+  id             Int      @id @default(autoincrement())
+  student_id     Int
+  class_id       Int
+  present        Boolean
+  notes          String?
+  student        Student  @relation(fields: [student_id], references: [id])
+  class          Class    @relation(fields: [class_id], references: [id])
 }
 
-model Professor {
-  id         Int      @id @default(autoincrement())
-  nome       String
-  usuario    String   @unique
-  senha      String
-  oficina    Oficina? @relation(fields: [oficina_id], references: [id])
-  oficina_id Int?
+model Teacher {
+  id           Int       @id @default(autoincrement())
+  name         String
+  username     String    @unique
+  password     String
+  workshop     Workshop? @relation(fields: [workshop_id], references: [id])
+  workshop_id  Int?
 }

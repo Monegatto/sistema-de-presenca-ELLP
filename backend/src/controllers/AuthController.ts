@@ -4,7 +4,7 @@ import 'dotenv/config'
 
 export class AuthController {
     async login(req: Request, res: Response) {
-        const credentials = { email: 'admin', senha: 'password' }
+        const credentials = { username: 'admin', password: 'password' }
 
         const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -14,7 +14,7 @@ export class AuthController {
         }
         if (!username || !password) {
             return res.status(401).json({ error: 'Username or password cannot be null' });
-        } else if (username === credentials.email && password === credentials.senha) {
+        } else if (username === credentials.username && password === credentials.password) {
             const token = jwt.sign({ user: credentials }, SECRET_KEY, { expiresIn: '24h' });
             return res.status(200).json({ token });
         } else {

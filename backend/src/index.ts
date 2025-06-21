@@ -1,7 +1,7 @@
 import express from 'express'
-import { oficinaRouter } from './routes/Oficina.routes'
+import { workshopRouter } from './routes/Workshop.routes'
 import { studentRouter } from './routes/Student.routes'
-import { professorRouter } from './routes/Professor.routes'
+import { teacherRouter } from './routes/Teacher.routes'
 import { authRouter } from './routes/Auth.routes'
 
 const cors = require('cors')
@@ -10,9 +10,9 @@ const app = express()
 app
   .use(express.json())
   .use(cors())
-  .use(oficinaRouter)
+  .use(workshopRouter)
   .use(studentRouter)
-  .use(professorRouter)
+  .use(teacherRouter)
   .use(authRouter)
 
 app.listen(3333, () => {
