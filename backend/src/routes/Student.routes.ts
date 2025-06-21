@@ -14,7 +14,7 @@ studentRouter.post('/students', authenticateToken, async (req, res) => {
   }
 })
 
-studentRouter.get('/students', async (req, res) => {
+studentRouter.get('/students', authenticateToken, async (req, res) => {
   try {
     await controller.list(req, res)
   } catch (error) {
@@ -22,7 +22,7 @@ studentRouter.get('/students', async (req, res) => {
   }
 })
 
-studentRouter.get('/students/:id', async (req, res) => {
+studentRouter.get('/students/:id', authenticateToken, async (req, res) => {
   try {
     await controller.getById(req, res)
   } catch (error) {
@@ -30,7 +30,7 @@ studentRouter.get('/students/:id', async (req, res) => {
   }
 })
 
-studentRouter.get('/workshops/:workshopId/students', async (req, res) => {
+studentRouter.get('/workshops/:workshopId/students', authenticateToken, async (req, res) => {
   try {
     await controller.listByWorkshop(req, res)
   } catch (error) {
@@ -38,7 +38,7 @@ studentRouter.get('/workshops/:workshopId/students', async (req, res) => {
   }
 })
 
-studentRouter.put('/students/:id', async (req, res) => {
+studentRouter.put('/students/:id', authenticateToken, async (req, res) => {
   try {
     await controller.update(req, res)
   } catch (error) {
@@ -46,7 +46,7 @@ studentRouter.put('/students/:id', async (req, res) => {
   }
 })
 
-studentRouter.delete('/students/:id', async (req, res) => {
+studentRouter.delete('/students/:id', authenticateToken, async (req, res) => {
   try {
     await controller.remove(req, res)
   } catch (error) {
