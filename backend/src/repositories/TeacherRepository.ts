@@ -24,4 +24,8 @@ export class TeacherRepository {
       where: { id },
     })
   }
+
+  async findByUsername(username: string) {
+    return await this.prisma.teacher.findUnique({ where: { username } })
+  }
 }

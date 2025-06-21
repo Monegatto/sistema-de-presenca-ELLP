@@ -1,12 +1,12 @@
 /// <reference path="../types/express/index.d.ts" />
 import { Router } from 'express'
 import { TeacherController } from '../controllers/TeacherController'
-import { authenticateToken } from '../middlewares/authMiddleware'
+import { authenticateTokenAdmin } from '../middlewares/authMiddleware'
 
 const teacherRouter = Router()
 const controller = new TeacherController()
 
-teacherRouter.post('/teachers', authenticateToken, async (req, res) => {
+teacherRouter.post('/teachers', authenticateTokenAdmin, async (req, res) => {
     try {
         await controller.create(req, res)
     } catch (error) {
@@ -14,7 +14,7 @@ teacherRouter.post('/teachers', authenticateToken, async (req, res) => {
     }
 })
 
-teacherRouter.delete('/teachers/:id', authenticateToken, async (req, res) => {
+teacherRouter.delete('/teachers/:id', authenticateTokenAdmin, async (req, res) => {
     try {
         await controller.remove(req, res)
     } catch (error) {

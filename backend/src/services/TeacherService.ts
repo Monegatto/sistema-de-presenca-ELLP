@@ -17,4 +17,8 @@ export class TeacherService {
   async deleteTeacher(id: number) {
     return await this.repository.delete(id)
   }
+
+  async findTeacherByUsername(username: string): Promise<Teacher | null> {
+    return await this.repository.findByUsername(username)
+  }
 }

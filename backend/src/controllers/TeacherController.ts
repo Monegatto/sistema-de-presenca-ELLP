@@ -33,4 +33,21 @@ export class TeacherController {
       return res.status(404).json({ error: 'Teacher not found' })
     }
   }
+
+  async findByUsername(req: Request, res: Response) {
+    const { username } = req.params
+    if (!username) {
+      return res.status(400).json({ error: 'Username is required' })
+    }
+
+    try {
+      const teacher = await service.findTeacherByUsername(username)
+      if (!teacher) {
+        return res.status(404).json({ error: 'Teacher not found' })
+      }
+      return res.status(200).json(teacher)
+    } catch (error) {
+      return res.status(500).json({ error: 'Error fetching teacher', detail: error })
+    }
+  }
 }
