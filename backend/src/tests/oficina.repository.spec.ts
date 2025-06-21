@@ -1,5 +1,5 @@
-import { OficinaRepository } from "../repositories/OficinaRepository"
-import { Oficina } from "../models/Oficina"
+import { OficinaRepository } from "../repositories/WorkshopRepository"
+import { Oficina } from "../models/Workshop"
 
 // Mock prisma.oficina methods
 const prisma = {

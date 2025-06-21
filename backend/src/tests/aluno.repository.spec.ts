@@ -1,4 +1,4 @@
-import { AlunoRepository } from "../repositories/AlunoRepository"
+import { AlunoRepository } from "../repositories/StudentRepository"
 import { prisma } from "./prisma"
 
 describe('AlunoRepository', () => {
