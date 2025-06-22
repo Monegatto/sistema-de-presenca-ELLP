@@ -25,6 +25,9 @@
 
 <script>
 import api from '../services/api';
+import { useConfirmationModal } from '@/plugins/ModalPlugin';
+
+const { open } = useConfirmationModal();
 
 export default {
   name: 'StudentsEdit',
@@ -62,6 +65,10 @@ export default {
       }
     },
     async updateStudent() {
+
+      const confirm = await open(`editar o aluno "${this.name}"`);
+      if (!confirm) return;
+
       const id = this.$route.params.id;
       try {
         await api.put(`/students/${id}`, {
@@ -74,10 +81,11 @@ export default {
       }
     },
     async removeStudent() {
-      const id = this.$route.params.id;
-      const confirmar = confirm('Tem certeza que deseja remover este aluno?'); //Temporario até a adição do modal
-      if (!confirmar) return;
 
+      const confirm = await open(`remover o aluno "${this.name}"`);
+      if (!confirm) return;
+
+      const id = this.$route.params.id;
       try {
         await api.delete(`/students/${id}`);
         this.$router.push({ name: 'students' });

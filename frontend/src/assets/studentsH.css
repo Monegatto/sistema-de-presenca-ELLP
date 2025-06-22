@@ -129,3 +129,6 @@ td.number{
 td.default{
     font-size: 12px;
 }
+tr:nth-of-type(even){ 
+    background-color: #F2F0EF;
+}

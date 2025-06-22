@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import { useRouter, useRoute } from 'vue-router';
-
 export default {
   name: 'SideNav',
   data() {
