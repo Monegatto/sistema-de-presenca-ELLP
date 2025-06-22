@@ -10,18 +10,18 @@
       </div>
       <div class="sidenav-section">
         <span class="sidenav-section-title">CADASTRO</span>
-        <router-link to="/oficinas" class="sidenav-btn" :class="{ active: activeIndex === 1 }" @click="setActive(1)">
+        <router-link to="/workshops" class="sidenav-btn" :class="{ active: activeIndex === 1 }" @click="setActive(1)">
           <font-awesome-icon icon="chalkboard-teacher" class="icon" />
           Oficinas
         </router-link>
-        <router-link to="/alunos" class="sidenav-btn" :class="{ active: activeIndex === 2 }" @click="setActive(2)">
+        <router-link to="/students" class="sidenav-btn" :class="{ active: activeIndex === 2 }" @click="setActive(2)">
           <font-awesome-icon icon="clipboard-list" class="icon" />
           Alunos
         </router-link>
       </div>
       <div class="sidenav-section">
         <span class="sidenav-section-title">RELATORIO</span>
-        <router-link to="/relatorio-presenca" class="sidenav-btn" :class="{ active: activeIndex === 3 }" @click="setActive(3)">
+        <router-link to="/report" class="sidenav-btn" :class="{ active: activeIndex === 3 }" @click="setActive(3)">
           <font-awesome-icon icon="graduation-cap" class="icon" />
           Relatorio
         </router-link>

@@ -29,17 +29,32 @@
 </template>
 
 <script setup>
+import api from '../services/api';
+import { useToast } from 'vue-toastification';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const username = ref('');
 const password = ref('');
 const router = useRouter();
+const toast = useToast();
 
-function handleLogin() {
-  // Apenas redireciona para a próxima página (sem login)
-  router.push('/lista-presenca');
-  const hideLayout = ref(false);
+async function handleLogin() {
+  try{
+    const response = await api.post('/login', {
+      username: username.value,
+      password: password.value
+    });
+
+    const token = response.data.token
+    localStorage.setItem('token', token)
+
+    router.push('/lista-presenca');
+    const hideLayout = ref(false);
+
+  } catch (error) {
+    toast.warning('Usuário ou senha inválidos');
+  }
 }
 </script>
 

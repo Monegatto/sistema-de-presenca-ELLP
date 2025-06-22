@@ -23,11 +23,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(oficina, index) in filteredOficinas" :key="oficina.id" @click="handleRouteEdit(oficina.id)">
+                    <tr v-for="(workshop, index) in filteredWorkshops" :key="workshop.id" @click="handleRouteEdit(workshop.id)">
                         <td class="number">{{ index + 1 }}</td>
-                        <td class="default">{{ oficina.nome }}</td>
-                        <td class="default">{{ oficina.id }}</td>
-                        <td class="default">{{ oficina.coordenador }}</td>
+                        <td class="default">{{ workshop.name }}</td>
+                        <td class="default">{{ workshop.id }}</td>
+                        <td class="default">{{ workshop.teacher }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -36,46 +36,46 @@
 </template>
 
 <script>
-import axios from 'axios';
+import api from '../services/api';
 
 export default {
-    name: 'OficinasHome',
+    name: 'WorkshopHome',
     data() {
         return {
-            oficinas: [],
+            workshops: [],
             searchTerm: '',
         };
     },
     computed: {
-        filteredOficinas() {
-            if (!this.searchTerm) return this.oficinas;
-            return this.oficinas.filter(oficina =>
-                oficina.nome.toLowerCase().includes(this.searchTerm.toLowerCase())
+        filteredWorkshops() {
+            if (!this.searchTerm) return this.workshops;
+            return this.workshops.filter(workshop =>
+                workshop.name.toLowerCase().includes(this.searchTerm.toLowerCase())
             );
         }
     },
     mounted(){
-        this.carregarOfinicas();
+        this.listWorkshops();
     },
     methods: {
-        async carregarOfinicas() {
+        async listWorkshops() {
             try {
-                const response = await axios.get('http://localhost:3333/oficinas');
-                this.oficinas = Array.isArray(response.data) ? response.data : [];
+                const response = await api.get('/workshops');
+                this.workshops = Array.isArray(response.data) ? response.data : [];
             } catch (error) {
                 console.error('Erro ao carregar oficinas:', error);
-                this.oficinas = [];
+                this.workshops = [];
             }
         },
         handleRouteNew() {
-            this.$router.push({ name: 'oficinas-nova' });
+            this.$router.push({ name: 'workshops-new' });
         },
         handleRouteEdit(id) {
-            this.$router.push({ name: 'oficinas-editar', params: { id } });
+            this.$router.push({ name: 'workshops-edit', params: { id } });
         }
 
     }
 };
 </script>
 
-<style scoped src="../assets/oficinaH.css"></style>
+<style scoped src="../assets/workshopsH.css"></style>

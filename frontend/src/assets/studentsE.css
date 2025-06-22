@@ -65,18 +65,18 @@
   box-shadow: 0 0 0 2px #4154F1;
 }
 
-.dia-select-group {
+.weekday-select-group {
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
 }
 
-.dia-select-group select {
+.weekday-select-group select {
   flex: 1;
 }
 
-.dia-select-group button {
+.weekday-select-group button {
   padding: 8px 12px;
   background-color: #f0f0f0;
   color: #2c3ebd;
@@ -87,7 +87,7 @@
   transition: background 0.2s ease;
 }
 
-.dia-select-group button:hover {
+.weekday-select-group button:hover {
   background-color: #e0e0e0;
 }
 

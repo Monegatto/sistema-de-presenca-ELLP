@@ -2,27 +2,27 @@
   <div class="main-content">
     <h2 class="page-title">Lista de Presença</h2>
     <div class="content-box">
-      <form class="filter-form" @submit.prevent="buscaralunos">
+      <form class="filter-form" @submit.prevent="TODO">
         <div class="form-group">
-          <label for="oficina">Oficina</label>
-          <select id="oficina" v-model="oficina">
+          <label for="workshop">Oficina</label>
+          <select id="workshop" v-model="workshop">
             <option disabled value="">Selecione uma oficina</option>
-            <option v-for="oficinaItem in oficinas" :key="oficinaItem.id" :value="oficinaItem.nome">
-              {{ oficinaItem.nome }}
+            <option v-for="workshopItem in workshops" :key="workshopItem.id" :value="workshopItem.name">
+              {{ workshopItem.name }}
             </option>
           </select>
         </div>
         <div class="form-group">
-          <label for="data">Data</label>
-          <input id="data" type="date" v-model="data" />
+          <label for="date">Data</label>
+          <input id="date" type="date" v-model="date" />
         </div>
-        <button type="submit" class="btn-filtrar" :disabled="carregando">
-          {{carregando ? 'Carregando...' : 'Listar'}}
+        <button type="submit" class="btn-filtrar" :disabled="loading">
+          {{loading ? 'loading...' : 'Listar'}}
         </button>
       </form>
     </div>
 
-    <div v-if="alunos.length" class="tabela-box">
+    <div v-if="students.length" class="tabela-box">
       <h3 class="titulo">Lista de Presença</h3>
       <table class="tabela">
         <thead>
@@ -34,11 +34,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(aluno, index) in alunos" :key="aluno.id">
+          <tr v-for="(student, index) in students" :key="student.id">
             <td>{{ index + 1 }}</td>
-            <td>{{ aluno.nome }}</td>
+            <td>{{ student.name }}</td>
             <td>
-              <select v-model="aluno.presenca">
+              <select v-model="student.presenca">
                 <option disabled value="">Selecione</option>
                 <option :value="true">Presente</option>
                 <option :value="false">Ausente</option>
@@ -47,10 +47,10 @@
           </tr>
         </tbody>
       </table>
-      <button class="btn-enviar" @click="enviarPresencas">Enviar</button>
+      <button class="btn-enviar" @click="TODO2">Enviar</button>
     </div>
 
-    <div v-else-if="!carregando && buscou">
+    <div v-else-if="!loading && searched">
       <p>Nenhum resultado encontrado.</p>
     </div>
   </div>
@@ -58,77 +58,77 @@
 
 <script>
 import { ref, onMounted} from 'vue';
-import axios from 'axios';
+import api from '../services/api';
 import { useToast } from 'vue-toastification';
 
 export default {
   setup() {
-    const oficinas = ref([]);
-    const oficina = ref('');
-    const data = ref('');
-    const alunos = ref([]);
-    const carregando = ref(false);
-    const buscou = ref(false);
+    const workshops = ref([]);
+    const workshop = ref('');
+    const date = ref('');
+    const students = ref([]);
+    const loading = ref(false);
+    const searched = ref(false);
 
     const toast = useToast();
 
-    const buscarOficinas = async () => {
+    const listWorkshops = async () => {
       try {
-        const response = await axios.get('http://localhost:3333/oficinas');
-        oficinas.value = response.data;
+        const response = await api.get('/workshops');
+        workshops.value = response.data;
       } catch (error) {
         toast.error('Erro ao buscar oficinas.');
       }
     };
 
     // Funcionalidades relacionadas a presença dos alunos serão desenvolvidas na próxima sprint
-    async function buscaralunos() {
-      if (!data.value) {
+    async function TODO() {
+      if (!date.value) {
         toast.warning('Por favor, selecione uma data.');
         return;
       }
 
-      carregando.value = true;
-      buscou.value = false;
+      loading.value = true;
+      searched.value = false;
 
       try {
-        const response = await axios.get('http://localhost:3333/oficinas/todo', {
+        const response = await api.get('/workshops/TODO', {
           params: {
-            oficina: oficina.id,
-            data: data.value,
+            workshop: workshop.id,
+            date: date.value,
           },
         });
 
-        alunos.value = response.data.map(p => ({
+        students.value = response.data.map(p => ({
           ...p
         }));
 
-        if (alunos.value.length === 0) {
+        if (students.value.length === 0) {
           toast.info('Nenhum resultado encontrado.');
         }
 
-        buscou.value = true;
+        searched.value = true;
       } catch (error) {
         toast.error('Erro ao buscar alunos. Tente novamente.');
         console.error(error);
       } finally {
-        carregando.value = false;
+        loading.value = false;
       }
     }
 
-    async function enviarPresencas() {
-      const invalidos = alunos.value.filter(p => p.presenca === '');
+    async function TODO2() {
+      const invalidos = students.value.filter(p => p.presenca === '');
       if (invalidos.length > 0) {
         toast.warning('Marque a presença de todos os alunos antes de enviar.');
         return;
       }
 
       try {
-        await axios.post('http://localhost:3333/alunos/todo', {
-          data: data.value,
-          oficina: oficina.value,
-          presenca: alunos.value.map(a => ({
-            alunoId: a.id,
+        await api.post('/students/todo', {
+          date: date.value,
+          workshop: workshop.value,
+          presenca: students.value.map(a => ({
+            student_id: a.id,
             presenca: a.presenca,
           })),
         });
@@ -140,17 +140,17 @@ export default {
     }
 
     onMounted(() => {
-      buscarOficinas();
+      listWorkshops();
     });
     return {
-      oficina,
-      oficinas,
-      data,
-      alunos,
-      carregando,
-      buscou,
-      buscaralunos,
-      enviarPresencas,
+      workshop,
+      workshops,
+      date,
+      students,
+      loading,
+      searched,
+      TODO,
+      TODO2,
     };
   },
 };
