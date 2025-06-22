@@ -11,9 +11,7 @@ model Workshop {
   id           Int           @id @default(autoincrement())
   name         String
   weekdays     String?
-  coordinator  String?
   startTime    String?
-  responsibles Responsible[]
   students     Student[]
   classes      Class[]
   teachers     Teacher[]
@@ -25,15 +23,6 @@ model Student {
   workshop     Workshop?  @relation(fields: [workshop_id], references: [id])
   workshop_id  Int?
   attendance   Attendance[]
-}
-
-model Responsible {
-  id             Int      @id @default(autoincrement())
-  name           String
-  username       String   @unique
-  password       String
-  workshop       Workshop @relation(fields: [workshop_id], references: [id])
-  workshop_id    Int
 }
 
 model Class {

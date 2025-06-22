@@ -1,55 +1,49 @@
 import { PrismaClient } from '@prisma/client'
+import { Student } from '../models/Student'
 
 export class StudentRepository {
-  private prisma: any
+  private prisma: PrismaClient
 
-  constructor(prismaInstance?: any) {
+  constructor(prismaInstance?: PrismaClient) {
     this.prisma = prismaInstance || new PrismaClient()
   }
 
-  async create(name: string, workshop_id?: number) {
+  async create(name: string, workshopId?: number) {
     const result = await this.prisma.student.create({
-      data: {
-        name,
-        workshop_id
-      }
+      data: { name, workshop_id: workshopId }
     })
-    return result
+    return new Student(result.id, result.workshop_id)
   }
 
   async findAll() {
-    return await this.prisma.student.findMany({
-      include: { workshop: true }
-    })
+    const students = await this.prisma.student.findMany()
+    return students.map(s => new Student(s.id, s.workshop_id))
   }
 
   async findById(id: number) {
-    return await this.prisma.student.findUnique({
-      where: { id },
-      include: { workshop: true }
+    const student = await this.prisma.student.findUnique({
+      where: { id }
     })
+    if (!student) return null
+    return new Student(student.id, student.workshop_id)
   }
 
-  async findByWorkshop(workshop_id: number) {
-    return await this.prisma.student.findMany({
-      where: { workshop_id },
-      include: { workshop: true }
+  async findByWorkshop(workshopId: number) {
+    const students = await this.prisma.student.findMany({
+      where: { workshop_id: workshopId }
     })
+    return students.map(s => new Student(s.id, s.workshop_id))
   }
 
-  async update(id: number, name: string, workshop_id: number) {
-    return await this.prisma.student.update({
+  async update(id: number, name: string, workshopId: number) {
+    const updated = await this.prisma.student.update({
       where: { id },
-      data: {
-        name,
-        workshop_id
-      }
+      data: { name, workshop_id: workshopId }
     })
+    return new Student(updated.id, updated.workshop_id)
   }
 
   async delete(id: number) {
-    return await this.prisma.student.delete({
-      where: { id }
-    })
+    await this.prisma.student.delete({ where: { id } })
   }
 }
