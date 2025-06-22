@@ -23,11 +23,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(aluno, index) in filteredAlunos" :key="aluno.id" @click="handleRouteEdit(aluno.id)">
+                    <tr v-for="(student, index) in filteredStudents" :key="student.id" @click="handleRouteEdit(student.id)">
                         <td class="number">{{ index + 1 }}</td>
-                        <td class="default">{{ aluno.nome }}</td>
-                        <td class="default">{{ aluno.id }}</td>
-                        <td class="default">{{ aluno.oficina_id }}</td>
+                        <td class="default">{{ student.name }}</td>
+                        <td class="default">{{ student.id }}</td>
+                        <td class="default">{{ student.workshop_id }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -36,45 +36,45 @@
 </template>
 
 <script>
-import axios from 'axios';
+import api from '../services/api';
 
 export default {
-    name: 'AlunosHome',
+    name: 'StudentsHome',
     data() {
         return {
-            alunos: [],
+            students: [],
             searchTerm: '',
         };
     },
     computed: {
-        filteredAlunos() {
-            if (!this.searchTerm) return this.alunos;
-            return this.alunos.filter(aluno =>
-                aluno.nome.toLowerCase().includes(this.searchTerm.toLowerCase())
+        filteredStudents() {
+            if (!this.searchTerm) return this.students;
+            return this.students.filter(student =>
+                student.name.toLowerCase().includes(this.searchTerm.toLowerCase())
             );
         }
     },
     mounted(){
-        this.carregarAlunos();
+        this.listStudents();
     },
     methods: {
-        async carregarAlunos() {
+        async listStudents() {
             try {
-                const response = await axios.get('http://localhost:3333/alunos');
-                this.alunos = Array.isArray(response.data) ? response.data : [];
+                const response = await api.get('/students');
+                this.students = Array.isArray(response.data) ? response.data : [];
             } catch (error) {
                 console.error('Erro ao carregar alunos:', error);
-                this.alunos = [];
+                this.students = [];
             }
         },
         handleRouteNew() {
-            this.$router.push({ name: 'alunos-novo' });
+            this.$router.push({ name: 'students-new' });
         },
         handleRouteEdit(id) {
-            this.$router.push({ name: 'alunos-editar', params: { id } });
+            this.$router.push({ name: 'students-edit', params: { id } });
         }
     }
 };
 </script>
 
-<style scoped src="../assets/alunosH.css"></style>
+<style scoped src="../assets/studentsH.css"></style>

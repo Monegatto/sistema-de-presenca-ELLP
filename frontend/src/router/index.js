@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../views/Login.vue';
 import ListaDePresenças from '@/views/ListaDePresenca.vue';
-import OficinasHome from '@/views/OficinasHome.vue';
-import AlunosHome from '@/views/AlunosHome.vue';
-import OficinasNew from '@/views/OficinaNew.vue';
-import AlunosNew from '@/views/AlunosNew.vue';
-import OficinasEdit from '@/views/OficinaEdit.vue';
-import AlunosEdit from '@/views/AlunosEdit.vue';
-import RelatorioPresenca from '@/views/RelatorioPresenca.vue';
+import WorkshopHome from '@/views/WorkshopsHome.vue';
+import StudentsHome from '@/views/StudentsHome.vue';
+import WorkshopNew from '@/views/WorkshopsNew.vue';
+import StudentsNew from '@/views/StudentsNew.vue';
+import WorkshopsEdit from '@/views/WorkshopsEdit.vue';
+import StudentsEdit from '@/views/StudentsEdit.vue';
+import Report from '@/views/Report.vue';
 
 const routes = [
   {
@@ -21,39 +21,39 @@ const routes = [
     component: ListaDePresenças,
   },
   {
-    path: '/oficinas',
-    name: 'oficinas',
-    component: OficinasHome,
+    path: '/workshops',
+    name: 'workshops',
+    component: WorkshopHome,
   },
   {
-    path: '/alunos',
-    name: 'alunos',
-    component: AlunosHome,
+    path: '/students',
+    name: 'students',
+    component: StudentsHome,
   },
   {
-    path: '/oficinas-nova',
-    name: 'oficinas-nova',
-    component: OficinasNew
+    path: '/workshops-new',
+    name: 'workshops-new',
+    component: WorkshopNew
   },
   {
-    path: '/alunos-novo',
-    name: 'alunos-novo',
-    component: AlunosNew
+    path: '/students-new',
+    name: 'students-new',
+    component: StudentsNew
   },
   {
-    path: '/oficinas-editar/:id',
-    name: 'oficinas-editar',
-    component: OficinasEdit
+    path: '/workshops-edit/:id',
+    name: 'workshops-edit',
+    component: WorkshopsEdit
   },
   {
-    path: '/alunos-editar/:id',
-    name: 'alunos-editar',
-    component: AlunosEdit
+    path: '/students-edit/:id',
+    name: 'students-edit',
+    component: StudentsEdit
   },
   {
-    path: '/relatorio-presenca',
-    name: 'relatorio-presenca',
-    component: RelatorioPresenca
+    path: '/report',
+    name: 'report',
+    component: Report
   }
 ];
 
@@ -61,5 +61,22 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+const publicPages = ['/']
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  const authRequired = !publicPages.includes(to.path)
+
+  if (authRequired && !token) {
+    return next('/')
+  }
+
+  if (!authRequired && token) {
+    return next('/lista-presenca')
+  }
+
+  next()
+})
 
 export default router;
