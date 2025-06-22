@@ -24,7 +24,7 @@
         </div>
 
         <div class="form-actions">
-          <button class="new" type="submit">Salvar Alterações</button>
+          <button class="save" type="submit">Salvar Alterações</button>
           <button class="delete" type="button" @click="removeWorkshop">Apagar</button>
         </div>
       </form>
@@ -34,6 +34,9 @@
 
 <script>
 import api from '../services/api';
+import { useConfirmationModal } from '@/plugins/ModalPlugin';
+
+const { open } = useConfirmationModal();
 
 export default {
   name: 'WorkshopsEdit',
@@ -73,6 +76,10 @@ export default {
       this.weekdays.splice(idx, 1);
     },
     async updateWorkshop() {
+
+      const confirm = await open(`editar a oficina "${this.name}"`);
+      if (!confirm) return;
+      
       const id = this.$route.params.id;
       try {
         await api.put(`/workshops/${id}`, {
@@ -87,10 +94,11 @@ export default {
       }
     },
     async removeWorkshop() {
-      const id = this.$route.params.id;
-      const confirmar = confirm('Deseja realmente remover esta oficina?'); //Temporario até a adição do modal
-      if (!confirmar) return;
 
+      const confirm = await open(`remover a oficina "${this.name}"`);
+      if (!confirm) return;
+
+      const id = this.$route.params.id;
       try {
         await api.delete(`/workshops/${id}`);
         this.$router.push({ name: 'workshops' });
@@ -103,11 +111,3 @@ export default {
 </script>
 
 <style scoped src="../assets/workshopsE.css"></style>
-
-<style scoped>
-.delete {
-  background-color: #e74c3c;
-  color: white;
-  margin-left: 10px;
-}
-</style>
