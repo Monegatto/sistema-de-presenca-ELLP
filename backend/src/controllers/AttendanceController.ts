@@ -24,17 +24,21 @@ export class AttendanceController {
         res.json(attendance)
     }
 
-    async getByStudent(req: Request, res: Response) {
-        const studentId = Number(req.params.studentId)
-        const result = await service.getAttendancesByStudent(studentId)
+    async getByWorkshopAndDate(req: Request, res: Response) {
+        const workshopId = Number(req.params.workshopId)
+        const dateParam = req.query.date as string
+
+        if (!dateParam) return res.status(400).json({ error: 'Missing "date" query parameter' })
+
+        const date = new Date(dateParam)
+        if (isNaN(date.getTime())) return res.status(400).json({ error: 'Invalid date format' })
+
+        const result = await service.getByWorkshopAndDate(workshopId, date)
         res.json(result)
     }
 
-    async getByClass(req: Request, res: Response) {
-        const classId = Number(req.params.classId)
-        const result = await service.getAttendancesByClass(classId)
-        res.json(result)
-    }
+
+
 
     async update(req: Request, res: Response) {
         const id = Number(req.params.id)

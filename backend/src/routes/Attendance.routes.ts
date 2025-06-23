@@ -30,19 +30,11 @@ attendanceRouter.get('/attendances/:id', authenticateToken, async (req, res) => 
   }
 })
 
-attendanceRouter.get('/students/:studentId/attendances', authenticateToken, async (req, res) => {
+attendanceRouter.get('/workshops/:workshopId/attendances/by-date', authenticateToken, async (req, res) => {
   try {
-    await controller.getByStudent(req, res)
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' })
-  }
-})
-
-attendanceRouter.get('/classes/:classId/attendances', authenticateToken, async (req, res) => {
-  try {
-    await controller.getByClass(req, res)
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' })
+    await controller.getByWorkshopAndDate(req, res)
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Internal server error' })
   }
 })
 

@@ -33,13 +33,10 @@ export class AttendanceService {
     return await this.repository.findById(id)
   }
 
-  async getAttendancesByStudent(studentId: number) {
-    return await this.repository.findByStudent(studentId)
+  async getByWorkshopAndDate(workshopId: number, date: Date) {
+    return await this.repository.findByWorkshopAndDate(workshopId, date)
   }
 
-  async getAttendancesByClass(classId: number) {
-    return await this.repository.findByClass(classId)
-  }
 
   async updateAttendance(id: number, present: boolean, notes?: string) {
     return await this.repository.update(id, present, notes)

@@ -33,19 +33,39 @@ export class AttendanceRepository {
     return new Attendance(attendance.id, attendance.student_id, attendance.class_id, attendance.present, attendance.notes)
   }
 
-  async findByStudent(studentId: number) {
-    const attendances = await this.prisma.attendance.findMany({
-      where: { student_id: studentId }
-    })
-    return attendances.map(a => new Attendance(a.id, a.student_id, a.class_id, a.present, a.notes))
-  }
+  async findByWorkshopAndDate(workshopId: number, date: Date) {
+  const startOfDay = new Date(date)
+  startOfDay.setHours(0, 0, 0, 0)
 
-  async findByClass(classId: number) {
-    const attendances = await this.prisma.attendance.findMany({
-      where: { class_id: classId }
-    })
-    return attendances.map(a => new Attendance(a.id, a.student_id, a.class_id, a.present, a.notes))
-  }
+  const endOfDay = new Date(date)
+  endOfDay.setHours(23, 59, 59, 999)
+
+  const classOnDate = await this.prisma.class.findFirst({
+    where: {
+      workshop_id: workshopId,
+      scheduledDate: {
+        gte: startOfDay,
+        lte: endOfDay
+      }
+    },
+    include: {
+      attendance: true
+    }
+  })
+
+  const students = await this.prisma.student.findMany({
+    where: { workshop_id: workshopId }
+  })
+
+  return students.map(student => {
+    const attendance = classOnDate?.attendance.find(a => a.student_id === student.id)
+    return {
+      studentId: student.id,
+      name: student.name,
+      present: attendance?.present ?? null
+    }
+  })
+}
 
   async update(id: number, present: boolean, notes?: string) {
     const updated = await this.prisma.attendance.update({
