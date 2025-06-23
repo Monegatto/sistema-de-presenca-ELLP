@@ -46,7 +46,7 @@
   min-width: 150px;
 }
 
-.form-fields input[type="text"],
+.form-fields input[type="text"], .form-fields input[type="time"],
 .form-fields select {
   width: 100%;
   padding: 12px 16px;
@@ -59,6 +59,7 @@
 }
 
 .form-fields input[type="text"]:focus,
+.form-fields input[type="time"]:focus,
 .form-fields select:focus {
   outline: none;
   box-shadow: 0 0 0 2px #4154F1;

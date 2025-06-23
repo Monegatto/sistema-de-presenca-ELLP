@@ -8,9 +8,8 @@ export class TeacherService {
     name: string,
     username: string,
     password: string,
-    workshop_id?: number
   ): Promise<Teacher> {
-    return this.repository.create({ name, username, password, workshop_id })
+    return this.repository.create({ name, username, password})
   }
 
   async deleteTeacher(id: number): Promise<void> {
@@ -33,7 +32,6 @@ export class TeacherService {
     name?: string
     username?: string
     password?: string
-    workshop_id?: number
   }): Promise<Teacher> {
     return this.repository.update(id, data)
   }

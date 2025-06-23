@@ -4,8 +4,8 @@ import { WorkshopRepository } from '../repositories/WorkshopRepository'
 export class WorkshopService {
   constructor(private repository: WorkshopRepository) { }
 
-  async createWorkshop(name: string, weekdays: string | null, coordinator: string | null, startTime: string | null): Promise<Workshop> {
-    const workshop = new Workshop(0, name, weekdays, coordinator, startTime)
+  async createWorkshop(name: string, weekdays: string | null, teacher: number | null, startTime: string | null): Promise<Workshop> {
+    const workshop = new Workshop(0, name, weekdays, teacher, startTime)
     return await this.repository.create(workshop)
   }
 
@@ -18,8 +18,8 @@ export class WorkshopService {
     return workshops.find((workshop: { id: number }) => workshop.id === id) || null
   }
 
-  async updateWorkshop(id: number, name?: string, weekdays?: string | null, coordinator?: string | null, startTime?: string | null) {
-    return await this.repository.update(id, { name, weekdays, coordinator, startTime })
+  async updateWorkshop(id: number, name?: string, weekdays?: string | null, teacher?: string | null, startTime?: string | null) {
+    return await this.repository.update(id, { name, weekdays, teacher, startTime })
   }
 
   async deleteWorkshop(id: number) {

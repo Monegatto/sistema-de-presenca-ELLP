@@ -7,8 +7,10 @@
           <input v-model="name" type="text" placeholder="Nome da Oficina" required />
 
           <select v-model="teacher" required>
-            <option value="" disabled>Responsável</option>
-            <option v-for="teacher in teachers" :key="teacher" :value="teacher">{{ teacher }}</option>
+            <option value="" disabled selected>Responsável</option>
+            <option v-for="teacher in teachers" :key="teacher.id" :value="teacher.id">
+              {{ teacher.name }}
+            </option>
           </select>
 
           <div v-for="(weekday, idx) in weekdays" :key="idx" class="weekday-select-group">
@@ -20,7 +22,7 @@
             <button type="button" @click="addWeekday" v-if="idx === weekdays.length - 1">+</button>
           </div>
 
-          <input v-model="startTime" type="text" placeholder="Horário" required />
+          <input v-model="startTime" type="time" required />
         </div>
 
         <div class="form-actions">
@@ -46,18 +48,27 @@ export default {
       weekdays: [''],
       teacher: '',
       startTime: '',
-      teachers: ['Responsável 1', 'Responsável 2', 'Responsável 3'],
+      teachers: [],
       optionsWeekdays: ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB', 'DOM']
     };
   },
   async mounted() {
     const id = this.$route.params.id;
+    await this.listTeachers();
     if (id) {
-      await this.listWorkshops(id);
+      await this.listWorkshop(id);
     }
   },
   methods: {
-    async listWorkshops(id) {
+    async listTeachers() {
+      try {
+        const res = await api.get('/teachers');
+        this.teachers = res.data;
+      } catch (error) {
+        alert('Erro ao carregar professores!');
+      }
+    },
+    async listWorkshop(id) {
       try {
         const res = await api.get(`/workshops/${id}`);
         const workshop = res.data;
@@ -76,10 +87,9 @@ export default {
       this.weekdays.splice(idx, 1);
     },
     async updateWorkshop() {
-
       const confirm = await open(`editar a oficina "${this.name}"`);
       if (!confirm) return;
-      
+
       const id = this.$route.params.id;
       try {
         await api.put(`/workshops/${id}`, {
@@ -90,11 +100,10 @@ export default {
         });
         this.$router.push({ name: 'workshops' });
       } catch (error) {
-        alert('Erro ao salvar alterações!');
+        alert(`Erro ao salvar alterações: ${error.response?.data?.message || error.message}`);
       }
     },
     async removeWorkshop() {
-
       const confirm = await open(`remover a oficina "${this.name}"`);
       if (!confirm) return;
 

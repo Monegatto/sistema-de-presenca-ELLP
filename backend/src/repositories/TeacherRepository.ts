@@ -7,7 +7,6 @@ export class TeacherRepository {
     name: string
     username: string
     password: string
-    workshop_id?: number
   }): Promise<Teacher> {
     return prisma.teacher.create({ data })
   }
@@ -32,7 +31,6 @@ export class TeacherRepository {
     name?: string
     username?: string
     password?: string
-    workshop_id?: number
   }): Promise<Teacher> {
     return prisma.teacher.update({
       where: { id },

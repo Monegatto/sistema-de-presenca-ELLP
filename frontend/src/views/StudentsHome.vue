@@ -27,7 +27,7 @@
                         <td class="number">{{ index + 1 }}</td>
                         <td class="default">{{ student.name }}</td>
                         <td class="default">{{ student.id }}</td>
-                        <td class="default">{{ student.workshop_id }}</td>
+                        <td class="default">{{ getWorkshopName(student.workshopId) }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -43,6 +43,7 @@ export default {
     data() {
         return {
             students: [],
+            workshops: [],
             searchTerm: '',
         };
     },
@@ -56,6 +57,7 @@ export default {
     },
     mounted(){
         this.listStudents();
+        this.listWorkshops();
     },
     methods: {
         async listStudents() {
@@ -66,6 +68,19 @@ export default {
                 console.error('Erro ao carregar alunos:', error);
                 this.students = [];
             }
+        },
+        async listWorkshops() {
+            try {
+                const response = await api.get('/workshops');
+                this.workshops = Array.isArray(response.data) ? response.data : [];
+            } catch (error) {
+                console.error('Erro ao carregar oficinas:', error);
+                this.workshops = [];
+            }
+        },
+        getWorkshopName(workshopId) {
+            const workshop = this.workshops.find(w => w.id === workshopId);
+            return workshop ? workshop.name : 'N/A';
         },
         handleRouteNew() {
             this.$router.push({ name: 'students-new' });

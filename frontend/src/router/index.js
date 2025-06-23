@@ -7,6 +7,9 @@ import WorkshopNew from '@/views/WorkshopsNew.vue';
 import StudentsNew from '@/views/StudentsNew.vue';
 import WorkshopsEdit from '@/views/WorkshopsEdit.vue';
 import StudentsEdit from '@/views/StudentsEdit.vue';
+import UsersHome from '@/views/UsersHome.vue';
+import UsersNew from '@/views/UsersNew.vue';
+import UsersEdit from '@/views/UsersEdit.vue';
 import Report from '@/views/Report.vue';
 
 const routes = [
@@ -54,6 +57,21 @@ const routes = [
     path: '/report',
     name: 'report',
     component: Report
+  },
+  {
+    path: '/users',
+    name: 'users',
+    component: UsersHome
+  },
+  {
+    path: '/users-new',
+    name: 'users-new',
+    component: UsersNew
+  },
+  {
+    path: '/users-edit/:id',
+    name: 'users-edit', 
+    component: UsersEdit
   }
 ];
 

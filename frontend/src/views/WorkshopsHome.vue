@@ -20,6 +20,7 @@
                     <th class="default">Oficina</th>
                     <th class="default">ID da Oficina</th>
                     <th class="default">Responsável</th>
+                    <th class="default">Horário</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,7 +28,8 @@
                         <td class="number">{{ index + 1 }}</td>
                         <td class="default">{{ workshop.name }}</td>
                         <td class="default">{{ workshop.id }}</td>
-                        <td class="default">{{ workshop.teacher }}</td>
+                        <td class="default">{{ getWorkshopTeacherName(workshop.teacher) }}</td>
+                        <td class="default">{{ workshop.startTime }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -43,6 +45,7 @@ export default {
     data() {
         return {
             workshops: [],
+            teachers: [],
             searchTerm: '',
         };
     },
@@ -54,8 +57,9 @@ export default {
             );
         }
     },
-    mounted(){
-        this.listWorkshops();
+    mounted() {
+    this.listWorkshops();
+    this.listTeachers();
     },
     methods: {
         async listWorkshops() {
@@ -67,13 +71,25 @@ export default {
                 this.workshops = [];
             }
         },
+        async listTeachers() {
+            try {
+                const response = await api.get('/teachers');
+                this.teachers = Array.isArray(response.data) ? response.data : [];
+            } catch (error) {
+                console.error('Erro ao carregar professores:', error);
+                this.teachers = [];
+            }
+        },
         handleRouteNew() {
             this.$router.push({ name: 'workshops-new' });
         },
         handleRouteEdit(id) {
             this.$router.push({ name: 'workshops-edit', params: { id } });
-        }
-
+        },
+        getWorkshopTeacherName(teacherId) {
+            const teacher = this.teachers.find(t => t.id === teacherId);
+            return teacher ? teacher.name : 'N/A';
+        },
     }
 };
 </script>

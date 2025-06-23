@@ -18,10 +18,14 @@
           <font-awesome-icon icon="clipboard-list" class="icon" />
           Alunos
         </router-link>
+        <router-link to="/users" class="sidenav-btn" :class="{ active: activeIndex === 3 }" @click="setActive(3)">
+          <font-awesome-icon icon="clipboard-list" class="icon" />
+          Usuários
+        </router-link>
       </div>
       <div class="sidenav-section">
         <span class="sidenav-section-title">RELATORIO</span>
-        <router-link to="/report" class="sidenav-btn" :class="{ active: activeIndex === 3 }" @click="setActive(3)">
+        <router-link to="/report" class="sidenav-btn" :class="{ active: activeIndex === 4 }" @click="setActive(4)">
           <font-awesome-icon icon="graduation-cap" class="icon" />
           Relatorio
         </router-link>

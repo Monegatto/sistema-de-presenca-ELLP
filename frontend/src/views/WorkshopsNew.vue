@@ -8,8 +8,11 @@
 
           <select v-model="teacher" required>
             <option value="" disabled selected>Responsável</option>
-            <option v-for="teacher in teachers" :key="teacher" :value="teacher">{{ teacher }}</option>
+            <option v-for="teacher in teachers" :key="teacher.id" :value="teacher.id">
+              {{ teacher.name }}
+            </option>
           </select>
+
 
           <div v-for="(weekday, idx) in weekdays" :key="idx" class="weekday-select-group">
             <select v-model="weekdays[idx]" required>
@@ -20,7 +23,8 @@
             <button type="button" @click="addWeekday" v-if="idx === weekdays.length - 1">+</button>
           </div>
 
-          <input v-model="startTime" type="text" placeholder="Horário" required />
+          <input v-model="startTime" type="time" required />
+
         </div>
 
         <div class="form-actions">
@@ -42,11 +46,22 @@ export default {
       weekdays: [''],
       teacher: '',
       startTime: '',
-      teachers: ['Responsável 1', 'Responsável 2', 'Responsável 3'],
+      teachers: [],
       optionsWeekdays: ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB', 'DOM']
     };
   },
+  mounted() {
+    this.listTeachers();
+  },
   methods: {
+    async listTeachers() {
+      try {
+        const res = await api.get('/teachers');
+        this.teachers = res.data;
+      } catch (error) {
+        alert('Erro ao carregar professores!');
+      }
+    },
     addWeekday() {
       this.weekdays.push('');
     },
@@ -63,7 +78,7 @@ export default {
         });
         this.$router.push({ name: 'workshops' });
       } catch (error) {
-        alert('Erro ao cadastrar oficina!');
+        alert(`Erro ao cadastrar oficina: ${error.response?.data?.message || error.message}`);
       }
     }
   }

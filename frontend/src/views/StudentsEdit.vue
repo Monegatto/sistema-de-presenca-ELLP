@@ -4,6 +4,7 @@
     <div class="content-box">
       <form class="form-group" @submit.prevent="updateStudent">
         <div class="form-fields">
+          <input v-model="studentId" type="text" placeholder="ID do Aluno" disabled />
           <input v-model="name" type="text" placeholder="Nome do Aluno" required />
 
           <select v-model="selectedWorkshop" required>
@@ -33,6 +34,7 @@ export default {
   name: 'StudentsEdit',
   data() {
     return {
+      studentId: '',
       name: '',
       selectedWorkshop: '',
       workshops: []
@@ -58,8 +60,9 @@ export default {
       try {
         const res = await api.get(`/students/${id}`);
         const student = res.data;
+        this.studentId = student.id;
         this.name = student.name;
-        this.selectedWorkshop = student.workshop_id || '';
+        this.selectedWorkshop = student.workshopId || '';
       } catch (err) {
         alert('Erro ao carregar dados do alunos!');
       }

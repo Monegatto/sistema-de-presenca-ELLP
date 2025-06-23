@@ -7,21 +7,27 @@ const service = new WorkshopService(repository)
 
 export class WorkshopController {
   async create(req: Request, res: Response) {
-    const { name, weekdays, coordinator, startTime } = req.body
+  const { name, weekdays, teacher, startTime } = req.body
 
-    if (!name) {
-      return res.status(400).json({ error: 'Name is required' })
-    }
+  if (!name) {
+    return res.status(400).json({ error: 'Name is required' })
+  }
 
+  try {
     const workshop = await service.createWorkshop(
       name,
       weekdays || null,
-      coordinator || null,
+      teacher || null,
       startTime || null
     )
 
     return res.status(201).json(workshop)
+  } catch (error) {
+    console.error('Erro ao criar oficina:', error)
+    return res.status(500).json({ error: 'Erro interno ao criar oficina' })
   }
+}
+
 
   async list(req: Request, res: Response) {
     const workshops = await service.listWorkshops()
@@ -46,7 +52,7 @@ export class WorkshopController {
 
   async update(req: Request, res: Response) {
     const { id } = req.params
-    const { name, weekdays, coordinator, startTime } = req.body
+    const { name, weekdays, teacher, startTime } = req.body
 
     const workshopId = Number(id)
 
@@ -55,7 +61,7 @@ export class WorkshopController {
     }
 
     try {
-      const workshop = await service.updateWorkshop(workshopId, name, weekdays, coordinator, startTime)
+      const workshop = await service.updateWorkshop(workshopId, name, weekdays, teacher, startTime)
       return res.status(200).json(workshop)
     } catch (error) {
       return res.status(404).json({ error: 'Workshop not found' })

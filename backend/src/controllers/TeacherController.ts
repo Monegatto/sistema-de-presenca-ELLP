@@ -7,16 +7,17 @@ const service = new TeacherService(repository)
 
 export class TeacherController {
   async create(req: Request, res: Response) {
-    const { name, username, password, workshop_id } = req.body
+    const { name, username, password} = req.body
 
     if (!name || !username || !password) {
       return res.status(400).json({ error: 'name, username and password are required' })
     }
 
     try {
-      const teacher = await service.createTeacher(name, username, password, workshop_id)
+      const teacher = await service.createTeacher(name, username, password)
       return res.status(201).json(teacher)
     } catch (error) {
+      console.error('Erro ao criar usuário:', error)
       return res.status(500).json({ error: 'Error creating teacher', detail: error })
     }
   }
@@ -79,14 +80,14 @@ export class TeacherController {
 
   async update(req: Request, res: Response) {
     const id = Number(req.params.id)
-    const { name, username, password, workshop_id } = req.body
+    const { name, username, password} = req.body
 
     if (isNaN(id)) {
       return res.status(400).json({ error: 'Invalid ID' })
     }
 
     try {
-      const updated = await service.updateTeacher(id, { name, username, password, workshop_id })
+      const updated = await service.updateTeacher(id, { name, username, password})
       return res.status(200).json(updated)
     } catch (error) {
       return res.status(500).json({ error: 'Error updating teacher', detail: error })

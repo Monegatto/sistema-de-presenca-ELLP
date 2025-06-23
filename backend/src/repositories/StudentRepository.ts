@@ -12,12 +12,12 @@ export class StudentRepository {
     const result = await this.prisma.student.create({
       data: { name, workshop_id: workshopId }
     })
-    return new Student(result.id, result.workshop_id)
+    return new Student(result.id, result.name, result.workshop_id)
   }
 
   async findAll() {
     const students = await this.prisma.student.findMany()
-    return students.map(s => new Student(s.id, s.workshop_id))
+    return students.map(s => new Student(s.id, s.name, s.workshop_id))
   }
 
   async findById(id: number) {
@@ -25,14 +25,14 @@ export class StudentRepository {
       where: { id }
     })
     if (!student) return null
-    return new Student(student.id, student.workshop_id)
+    return new Student(student.id, student.name, student.workshop_id)
   }
 
   async findByWorkshop(workshopId: number) {
     const students = await this.prisma.student.findMany({
       where: { workshop_id: workshopId }
     })
-    return students.map(s => new Student(s.id, s.workshop_id))
+    return students.map(s => new Student(s.id, s.name, s.workshop_id))
   }
 
   async update(id: number, name: string, workshopId: number) {
@@ -40,7 +40,7 @@ export class StudentRepository {
       where: { id },
       data: { name, workshop_id: workshopId }
     })
-    return new Student(updated.id, updated.workshop_id)
+    return new Student(updated.id, updated.name, updated.workshop_id)
   }
 
   async delete(id: number) {

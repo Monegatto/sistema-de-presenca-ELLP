@@ -13,7 +13,7 @@ export class WorkshopRepository {
       data: {
         name: workshop.name,
         weekdays: workshop.weekdays,
-        coordinator: workshop.coordinator,
+        teacher: workshop.teacher,
         startTime: workshop.startTime
       }
     })
@@ -22,7 +22,7 @@ export class WorkshopRepository {
       result.id,
       result.name,
       result.weekdays,
-      result.coordinator,
+      result.teacher,
       result.startTime
     )
   }
@@ -43,12 +43,12 @@ export class WorkshopRepository {
       result.id,
       result.name,
       result.weekdays,
-      result.coordinator,
+      result.teacher,
       result.startTime
     )
   }
 
-  async update(id: number, data: { name?: string, weekdays?: string | null, coordinator?: string | null, startTime?: string | null }) {
+  async update(id: number, data: { name?: string, weekdays?: string | null, teacher?: string | null, startTime?: string | null }) {
     const workshop = await this.prisma.workshop.update({
       where: { id },
       data
