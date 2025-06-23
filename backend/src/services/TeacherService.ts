@@ -1,5 +1,5 @@
-import { Teacher } from '../models/Teacher'
 import { TeacherRepository } from '../repositories/TeacherRepository'
+import { Teacher } from '@prisma/client'
 
 export class TeacherService {
   constructor(private repository: TeacherRepository) {}
@@ -8,17 +8,33 @@ export class TeacherService {
     name: string,
     username: string,
     password: string,
-    workshop_id: number | null
+    workshop_id?: number
   ): Promise<Teacher> {
-    const teacher = new Teacher(0, name, username, password, workshop_id ?? null)
-    return await this.repository.create(teacher)
+    return this.repository.create({ name, username, password, workshop_id })
   }
 
-  async deleteTeacher(id: number) {
-    return await this.repository.delete(id)
+  async deleteTeacher(id: number): Promise<void> {
+    await this.repository.delete(id)
   }
 
   async findTeacherByUsername(username: string): Promise<Teacher | null> {
-    return await this.repository.findByUsername(username)
+    return this.repository.findByUsername(username)
+  }
+
+  async findTeacherById(id: number): Promise<Teacher | null> {
+    return this.repository.findById(id)
+  }
+
+  async getAllTeachers(): Promise<Teacher[]> {
+    return this.repository.findAll()
+  }
+
+  async updateTeacher(id: number, data: {
+    name?: string
+    username?: string
+    password?: string
+    workshop_id?: number
+  }): Promise<Teacher> {
+    return this.repository.update(id, data)
   }
 }

@@ -1,31 +1,42 @@
-import { PrismaClient } from '@prisma/client'
-import { Teacher } from '../models/Teacher'
+import { PrismaClient, Teacher } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 export class TeacherRepository {
-  private prisma: any
-
-  constructor(prismaInstance?: any) {
-    this.prisma = prismaInstance || new PrismaClient()
+  async create(data: {
+    name: string
+    username: string
+    password: string
+    workshop_id?: number
+  }): Promise<Teacher> {
+    return prisma.teacher.create({ data })
   }
 
-  async create(teacher: Teacher) {
-    return await this.prisma.teacher.create({
-      data: {
-        name: teacher.name,
-        username: teacher.username,
-        password: teacher.password,
-        workshop_id: teacher.workshop_id ?? null,
-      },
-    })
+  async delete(id: number): Promise<void> {
+    await prisma.teacher.delete({ where: { id } })
   }
 
-  async delete(id: number) {
-    return await this.prisma.teacher.delete({
+  async findByUsername(username: string): Promise<Teacher | null> {
+    return prisma.teacher.findUnique({ where: { username } })
+  }
+
+  async findById(id: number): Promise<Teacher | null> {
+    return prisma.teacher.findUnique({ where: { id } })
+  }
+
+  async findAll(): Promise<Teacher[]> {
+    return prisma.teacher.findMany()
+  }
+
+  async update(id: number, data: {
+    name?: string
+    username?: string
+    password?: string
+    workshop_id?: number
+  }): Promise<Teacher> {
+    return prisma.teacher.update({
       where: { id },
+      data
     })
-  }
-
-  async findByUsername(username: string) {
-    return await this.prisma.teacher.findUnique({ where: { username } })
   }
 }
