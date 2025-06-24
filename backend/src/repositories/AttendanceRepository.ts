@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { Attendance } from '../models/Attendance'
+import { DateTime } from 'luxon'
 
 export class AttendanceRepository {
   private prisma: PrismaClient
@@ -34,37 +35,43 @@ export class AttendanceRepository {
   }
 
   async findByWorkshopAndDate(workshopId: number, date: Date) {
-    const startOfDay = new Date(date)
-    startOfDay.setHours(0, 0, 0, 0)
+    const dt = DateTime.fromJSDate(date).setZone('America/Sao_Paulo');
+    const startOfDay = dt.plus({ days: 1 }).startOf('day').toJSDate();
+    const endOfDay = dt.plus({ days: 2 }).startOf('day').toJSDate();
 
-    const endOfDay = new Date(date)
-    endOfDay.setHours(23, 59, 59, 999)
-
-    const classOnDate = await this.prisma.class.findFirst({
+    const classes = await this.prisma.class.findMany({
       where: {
         workshop_id: workshopId,
         scheduledDate: {
           gte: startOfDay,
-          lte: endOfDay
+          lt: endOfDay
         }
-      },
-      include: {
-        attendance: true
       }
-    })
+    });
+
+    if (classes.length === 0) return [];
+
+    const classIds = classes.map(c => c.id);
+
+    const attendances = await this.prisma.attendance.findMany({
+      where: {
+        class_id: { in: classIds }
+      }
+    });
 
     const students = await this.prisma.student.findMany({
       where: { workshop_id: workshopId }
-    })
+    });
 
     return students.map(student => {
-      const attendance = classOnDate?.attendance.find(a => a.student_id === student.id)
+      const attendance = attendances.find(a => a.student_id === student.id);
       return {
         studentId: student.id,
         name: student.name,
-        present: attendance?.present ?? null
+        present: attendance?.present ?? null,
+        attendanceId: attendance?.id ?? null,
       }
-    })
+    });
   }
 
   async update(id: number, present: boolean, notes?: string) {
