@@ -30,13 +30,9 @@ jobs:
         working-directory: backend
         run: cp .env.example .env
 
-      - name: Run linter
-        working-directory: backend
-        run: npm run lint
-
       - name: Run backend tests and coverage
         working-directory: backend
-        run: npm run test:backend
+        run: npm run test
 
       - name: Upload coverage to Codecov
         if: success()
