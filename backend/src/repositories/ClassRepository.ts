@@ -49,4 +49,10 @@ export class ClassRepository {
   async delete(id: number) {
     await this.prisma.class.delete({ where: { id } })
   }
+
+  async getNextClassDateByWorkshop(workshopId: number): Promise<Date | null> {
+    const workshop = await this.prisma.workshop.findUnique({ where: { id: workshopId } });
+    if (!workshop || !workshop.weekdays) return null;
+    return getNextClassDate(workshop.weekdays);
+  }
 }
