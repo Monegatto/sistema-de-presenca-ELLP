@@ -1,4 +1,5 @@
 /// <reference path="../types/express/index.d.ts" />
+
 import { Router } from 'express'
 import { AttendanceController } from '../controllers/AttendanceController'
 import { authenticateToken } from '../middlewares/authMiddleware'
