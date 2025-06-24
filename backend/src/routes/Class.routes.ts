@@ -38,6 +38,14 @@ classRouter.get('/workshops/:workshopId/classes', authenticateToken, async (req,
   }
 })
 
+classRouter.get('/workshops/:workshopId/next-class-date', authenticateToken, async (req, res) => {
+  try {
+    await controller.getNextClassDateByWorkshop(req, res)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
+
 classRouter.put('/classes/:id', authenticateToken, async (req, res) => {
   try {
     await controller.update(req, res)

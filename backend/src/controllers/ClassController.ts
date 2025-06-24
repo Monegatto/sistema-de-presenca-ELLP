@@ -45,4 +45,15 @@ export class ClassController {
     await service.deleteClass(id)
     res.status(204).send()
   }
+
+  async getNextClassDateByWorkshop(req: Request, res: Response) {
+    const workshopId = Number(req.params.workshopId)
+    try {
+      const nextDate = await service.getNextClassDateByWorkshop(workshopId)
+      if (!nextDate) return res.status(404).json({ error: 'Workshop not found or no next class date' })
+      res.json({ nextClassDate: nextDate })
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
 }
