@@ -63,7 +63,7 @@ Esse sistema tem como proposta **ser uma ferramenta de apoio à gestão das ofic
 
 ## Testes
 Serão realizados principalmente **testes unitários (UTs)** para validar as funcionalidades do projeto.
-Será utilizada a ferramenta **JUnit** para automatizar e executar os testes ao longo do desenvolvimento.
+Será utilizada a ferramenta **Jest** para automatizar e executar os testes ao longo do desenvolvimento.
 
 ## Configuração do Ambiente
 
