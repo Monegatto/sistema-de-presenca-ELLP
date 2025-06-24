@@ -15,7 +15,6 @@ export function getNextClassDate(weekdays: string, fromDate: Date = new Date()):
 
   for (const day of days) {
     let diff = (day - today + 7) % 7;
-    if (diff === 0) diff = 7;
     if (diff < minDiff) {
       minDiff = diff;
     }

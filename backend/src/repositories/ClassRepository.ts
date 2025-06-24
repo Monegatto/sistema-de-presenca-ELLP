@@ -56,10 +56,11 @@ export class ClassRepository {
     const workshop = await this.prisma.workshop.findUnique({ where: { id: workshopId } });
     if (!workshop || !workshop.weekdays || !workshop.startTime) return null;
 
-    const nextDate = getNextClassDate(workshop.weekdays);
-    if (!nextDate) return null;
-
     const [hours, minutes] = workshop.startTime.split(':').map(Number);
+
+    const now = DateTime.now().setZone('America/Sao_Paulo');
+    const nextDate = getNextClassDate(workshop.weekdays, now.toJSDate());
+    if (!nextDate) return null;
 
     const resultDate = DateTime.fromObject(
       {
