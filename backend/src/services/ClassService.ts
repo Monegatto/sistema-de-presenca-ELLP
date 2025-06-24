@@ -30,6 +30,10 @@ export class ClassService {
     return await this.repository.findByWorkshop(workshopId)
   }
 
+  async getNextClassDateByWorkshop(workshopId: number) {
+    return await this.repository.getNextClassDateByWorkshop(workshopId)
+  }
+
   async updateClass(id: number, scheduledDate: Date, workshopId: number) {
     return await this.repository.update(id, scheduledDate, workshopId)
   }

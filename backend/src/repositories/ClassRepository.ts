@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { Class } from '../models/Class'
+import { getNextClassDate } from '../utils/dateUtils'
+import { DateTime } from 'luxon'
 
 export class ClassRepository {
   private prisma: PrismaClient
@@ -52,7 +54,26 @@ export class ClassRepository {
 
   async getNextClassDateByWorkshop(workshopId: number): Promise<Date | null> {
     const workshop = await this.prisma.workshop.findUnique({ where: { id: workshopId } });
-    if (!workshop || !workshop.weekdays) return null;
-    return getNextClassDate(workshop.weekdays);
+    if (!workshop || !workshop.weekdays || !workshop.startTime) return null;
+
+    const nextDate = getNextClassDate(workshop.weekdays);
+    if (!nextDate) return null;
+
+    const [hours, minutes] = workshop.startTime.split(':').map(Number);
+
+    const resultDate = DateTime.fromObject(
+      {
+        year: nextDate.getFullYear(),
+        month: nextDate.getMonth() + 1,
+        day: nextDate.getDate(),
+        hour: hours,
+        minute: minutes || 0,
+        second: 0,
+        millisecond: 0
+      },
+      { zone: 'America/Sao_Paulo' }
+    ).toJSDate();
+
+    return resultDate;
   }
 }
