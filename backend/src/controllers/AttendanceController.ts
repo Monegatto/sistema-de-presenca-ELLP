@@ -37,8 +37,15 @@ export class AttendanceController {
         res.json(result)
     }
 
-
-
+    async getAttendancePercentage(req: Request, res: Response) {
+        const studentId = Number(req.params.studentId)
+        const workshopId = Number(req.params.workshopId)
+        if (isNaN(studentId) || isNaN(workshopId)) {
+            return res.status(400).json({ error: 'Invalid studentId or workshopId' })
+        }
+        const percentage = await service.getAttendancePercentage(studentId, workshopId)
+        res.json({ percentage })
+    }
 
     async update(req: Request, res: Response) {
         const id = Number(req.params.id)

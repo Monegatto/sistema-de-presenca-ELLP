@@ -34,38 +34,38 @@ export class AttendanceRepository {
   }
 
   async findByWorkshopAndDate(workshopId: number, date: Date) {
-  const startOfDay = new Date(date)
-  startOfDay.setHours(0, 0, 0, 0)
+    const startOfDay = new Date(date)
+    startOfDay.setHours(0, 0, 0, 0)
 
-  const endOfDay = new Date(date)
-  endOfDay.setHours(23, 59, 59, 999)
+    const endOfDay = new Date(date)
+    endOfDay.setHours(23, 59, 59, 999)
 
-  const classOnDate = await this.prisma.class.findFirst({
-    where: {
-      workshop_id: workshopId,
-      scheduledDate: {
-        gte: startOfDay,
-        lte: endOfDay
+    const classOnDate = await this.prisma.class.findFirst({
+      where: {
+        workshop_id: workshopId,
+        scheduledDate: {
+          gte: startOfDay,
+          lte: endOfDay
+        }
+      },
+      include: {
+        attendance: true
       }
-    },
-    include: {
-      attendance: true
-    }
-  })
+    })
 
-  const students = await this.prisma.student.findMany({
-    where: { workshop_id: workshopId }
-  })
+    const students = await this.prisma.student.findMany({
+      where: { workshop_id: workshopId }
+    })
 
-  return students.map(student => {
-    const attendance = classOnDate?.attendance.find(a => a.student_id === student.id)
-    return {
-      studentId: student.id,
-      name: student.name,
-      present: attendance?.present ?? null
-    }
-  })
-}
+    return students.map(student => {
+      const attendance = classOnDate?.attendance.find(a => a.student_id === student.id)
+      return {
+        studentId: student.id,
+        name: student.name,
+        present: attendance?.present ?? null
+      }
+    })
+  }
 
   async update(id: number, present: boolean, notes?: string) {
     const updated = await this.prisma.attendance.update({
@@ -77,5 +77,28 @@ export class AttendanceRepository {
 
   async delete(id: number) {
     await this.prisma.attendance.delete({ where: { id } })
+  }
+
+  async getAttendancePercentage(studentId: number, workshopId: number): Promise<number> {
+    const today = new Date();
+    const classes = await this.prisma.class.findMany({
+      where: {
+        workshop_id: workshopId,
+        scheduledDate: { lte: today }
+      }
+    });
+
+    if (classes.length === 0) return 0;
+
+    const classIds = classes.map(c => c.id);
+    const presences = await this.prisma.attendance.findMany({
+      where: {
+        student_id: studentId,
+        class_id: { in: classIds },
+        present: true
+      }
+    });
+
+    return (presences.length / classes.length) * 100;
   }
 }

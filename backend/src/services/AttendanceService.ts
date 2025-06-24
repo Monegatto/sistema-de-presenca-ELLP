@@ -37,6 +37,9 @@ export class AttendanceService {
     return await this.repository.findByWorkshopAndDate(workshopId, date)
   }
 
+  async getAttendancePercentage(studentId: number, workshopId: number) {
+    return await this.repository.getAttendancePercentage(studentId, workshopId);
+  }
 
   async updateAttendance(id: number, present: boolean, notes?: string) {
     return await this.repository.update(id, present, notes)

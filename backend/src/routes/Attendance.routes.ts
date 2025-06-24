@@ -39,6 +39,18 @@ attendanceRouter.get('/workshops/:workshopId/attendances/by-date', authenticateT
   }
 })
 
+attendanceRouter.get(
+  '/workshops/:workshopId/students/:studentId/attendance-percentage',
+  authenticateToken,
+  async (req, res) => {
+    try {
+      await controller.getAttendancePercentage(req, res)
+    } catch (error) {
+      res.status(500).json({ error: 'Internal server error' })
+    }
+  }
+)
+
 attendanceRouter.put('/attendances/:id', authenticateToken, async (req, res) => {
   try {
     await controller.update(req, res)
