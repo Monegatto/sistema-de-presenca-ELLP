@@ -36,8 +36,8 @@ export class AttendanceRepository {
 
   async findByWorkshopAndDate(workshopId: number, date: Date) {
     const dt = DateTime.fromJSDate(date).setZone('America/Sao_Paulo');
-    const startOfDay = dt.plus({ days: 1 }).startOf('day').toJSDate();
-    const endOfDay = dt.plus({ days: 2 }).startOf('day').toJSDate();
+    const startOfDay = dt.startOf('day').toJSDate();
+    const endOfDay = dt.plus({ days: 1 }).startOf('day').toJSDate();
 
     const classes = await this.prisma.class.findMany({
       where: {

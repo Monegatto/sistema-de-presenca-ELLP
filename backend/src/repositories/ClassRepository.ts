@@ -67,7 +67,7 @@ export class ClassRepository {
         year: nextDate.getFullYear(),
         month: nextDate.getMonth() + 1,
         day: nextDate.getDate(),
-        hour: hours,
+        hour: hours - 3,
         minute: minutes || 0,
         second: 0,
         millisecond: 0

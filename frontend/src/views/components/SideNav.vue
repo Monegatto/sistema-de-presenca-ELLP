@@ -3,7 +3,7 @@
     <div class="sidenav-content">
       <div class="sidenav-section">
         <span class="sidenav-section-title">PRESENÇA</span>
-        <router-link to="/lista-presenca" class="sidenav-btn" :class="{ active: activeIndex === 0 }" @click="setActive(0)">
+        <router-link to="/attendance-listing" class="sidenav-btn" :class="{ active: activeIndex === 0 }" @click="setActive(0)">
           <font-awesome-icon icon="clipboard-list" class="icon" />
           Lista de Presença
         </router-link>
