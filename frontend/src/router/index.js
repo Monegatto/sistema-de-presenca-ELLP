@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../views/Login.vue';
-import ListaDePresenças from '@/views/ListaDePresenca.vue';
+import AttendanceListing from '@/views/AttendanceListing.vue';
 import WorkshopHome from '@/views/WorkshopsHome.vue';
 import StudentsHome from '@/views/StudentsHome.vue';
 import WorkshopNew from '@/views/WorkshopsNew.vue';
@@ -19,9 +19,9 @@ const routes = [
     component: Login,
   },
   {
-    path: '/lista-presenca',
-    name: 'lista-presenca',
-    component: ListaDePresenças,
+    path: '/attendance-listing',
+    name: 'attendance-listing',
+    component: AttendanceListing,
   },
   {
     path: '/workshops',
@@ -91,7 +91,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if (!authRequired && token) {
-    return next('/lista-presenca')
+    return next('/attendance-listing')
   }
 
   next()

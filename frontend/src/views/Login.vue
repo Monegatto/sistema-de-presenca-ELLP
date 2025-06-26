@@ -49,7 +49,7 @@ async function handleLogin() {
     const token = response.data.token
     localStorage.setItem('token', token)
 
-    router.push('/lista-presenca');
+    router.push('/attendance-listing');
     const hideLayout = ref(false);
 
   } catch (error) {
