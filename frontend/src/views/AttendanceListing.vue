@@ -125,7 +125,7 @@ const listClasses = async () => {
     classes.value = [...scheduledDates];
 
     const existingNextClass = response.data.find(
-      c => formatDateOnly(c.value) === formatDateOnly(nextClassDate.value)
+      c => formatDateOnly(c.scheduledDate) === formatDateOnly(nextClassDate)
     );
 
     if (!existingNextClass) {
@@ -154,7 +154,7 @@ const getAttendance = async () => {
         params: { date: formatDateOnly(selectedDate.value) },
       }
     );
-console.log(response);
+
     if (response.data.length > 0) {
       students.value = response.data.map((item) => ({
         attendanceId: item.attendanceId,
@@ -210,7 +210,7 @@ const sendAttendance = async () => {
       });
       classId = newClassRes.data.id;
     }
-console.log(students.value.attendanceId);
+
     const promises = students.value.map((s) => {
       if (s.attendanceId) {
         return api.put(`/attendances/${s.attendanceId}`, {

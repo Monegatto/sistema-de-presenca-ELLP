@@ -91,7 +91,6 @@ export class AttendanceRepository {
     const classes = await this.prisma.class.findMany({
       where: {
         workshop_id: workshopId,
-        scheduledDate: { lte: today }
       }
     });
 

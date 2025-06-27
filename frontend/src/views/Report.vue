@@ -1,50 +1,43 @@
 <template>
   <div class="main-content">
     <h2 class="page-title">Relatório Oficina</h2>
-    <div class="content-box">
-      <form class="filter-form" @submit.prevent="TODO">
+    <div class="search-container">
+      <form class="filter-form" @submit.prevent="getAttendanceReport">
         <div class="form-group">
           <label for="workshop">Oficina</label>
-          <select id="workshop" v-model="selectedWorkshop" required placeholder="Selecione uma oficina">
+          <select id="workshop" v-model="selectedWorkshop">
             <option disabled value="">Selecione uma oficina</option>
-            <option v-for="workshop in workshops" :key="workshop.id" :value="workshop.name">
+            <option
+              v-for="workshop in workshops"
+              :key="workshop.id"
+              :value="workshop.id"
+            >
               {{ workshop.name }}
             </option>
           </select>
         </div>
         <button type="submit" class="btn-filtrar" :disabled="loading">
-          {{ loading ? 'loading...' : 'Relatório' }}
+          {{ loading ? 'Carregando...' : 'Relatório' }}
         </button>
       </form>
     </div>
 
-    <div v-if="report.length" class="report-table">
-      <div class="header">
-        <h3>Students</h3>
-        <input
-          type="text"
-          placeholder="Busca por Nome"
-          v-model="filter"
-          class="search-input"
-        />
-      </div>
-
-      <table>
+    <div v-if="students.length" class="content-box">
+      <table class="table">
         <thead>
           <tr>
             <th>#</th>
             <th>Estudante</th>
-            <th>Presença</th>
+            <th>ID do Estudante</th>
+            <th>Presença (%)</th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(student, index) in filteredStudents"
-            :key="student.id"
-          >
+          <tr v-for="(student, index) in students" :key="student.id">
             <td>{{ index + 1 }}</td>
             <td>{{ student.name }}</td>
-            <td>{{ student.present }}%</td>
+            <td>{{ student.id }}</td>
+            <td>{{ student.percentage.toFixed(1) }}%</td>
           </tr>
         </tbody>
       </table>
@@ -57,74 +50,94 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
-import { useToast } from 'vue-toastification'
-import api from '../services/api'
+import { ref, onMounted } from 'vue';
+import api from '../services/api';
+import { useToast } from 'vue-toastification';
 
 export default {
   setup() {
-    const workshops = ref([])
-    const selectedWorkshop = ref('')
-    const report = ref([])
-    const filter = ref('')
-    const loading = ref(false)
-    const searched = ref(false)
+    const workshops = ref([]);
+    const selectedWorkshop = ref('');
+    const students = ref([]);
+    const loading = ref(false);
+    const searched = ref(false);
 
-    const toast = useToast()
-
-    const filteredStudents = computed(() => {
-      return report.value.filter(student =>
-        student.name.toLowerCase().includes(filter.value.toLowerCase())
-      )
-    })
+    const toast = useToast();
 
     const listWorkshops = async () => {
       try {
-        const response = await api.get('/workshops')
-        workshops.value = response.data
+        const response = await api.get('/workshops');
+        workshops.value = response.data;
       } catch (error) {
-        toast.error('Erro ao buscar oficinas.')
-        console.error(error)
+        toast.error('Erro ao buscar oficinas.');
+        console.error(error);
       }
-    }
-    //Funcionalidades relacionadas a presença serão desenvolvidas na próxima sprint
-    const TODO = async () => {
-      if (!selectedWorkshop.value) return
+    };
 
-      loading.value = true
-      searched.value = false
+    const getAttendanceReport = async () => {
+      if (!selectedWorkshop.value) {
+        toast.warning('Por favor, selecione uma oficina.');
+        return;
+      }
+
+      loading.value = true;
+      searched.value = false;
+      students.value = [];
 
       try {
-        const response = await api.get('/students/todo', {
+        const response = await api.get(`/workshops/${selectedWorkshop.value}/students`, {
           params: { workshop: selectedWorkshop.value }
-        })
+        });
 
-        report.value = response.data
-        searched.value = true
+        const alunos = response.data;
+
+        const promises = alunos.map(async aluno => {
+          try {
+            const res = await api.get(`/workshops/${selectedWorkshop.value}/students/${aluno.id}/attendance-percentage`);
+            return {
+              id: aluno.id,
+              name: aluno.name,
+              percentage: res.data.percentage ?? 0
+            };
+          } catch (err) {
+            console.error(`Erro ao buscar % de presença para ${aluno.name}`, err);
+            return {
+              id: aluno.id,
+              name: aluno.name,
+              percentage: 0
+            };
+          }
+        });
+
+        students.value = await Promise.all(promises);
+
+        if (students.value.length === 0) {
+          toast.info('Nenhum resultado encontrado.');
+        }
+
+        searched.value = true;
       } catch (error) {
-        toast.error('Erro ao buscar relatório.')
-        console.error(error)
+        toast.error('Erro ao buscar relatório.');
+        console.error(error);
       } finally {
-        loading.value = false
+        loading.value = false;
       }
-    }
+    };
 
     onMounted(() => {
-      listWorkshops()
-    })
+      listWorkshops();
+    });
 
     return {
       workshops,
       selectedWorkshop,
-      report,
-      filter,
-      filteredStudents,
-      TODO,
+      students,
+      getAttendanceReport,
       loading,
-      searched,
-    }
+      searched
+    };
   }
-}
+};
 </script>
 
 <style scoped src="../assets/presenca.css"></style>
