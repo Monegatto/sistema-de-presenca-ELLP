@@ -7,8 +7,16 @@ export class TeacherRepository {
     name: string
     username: string
     password: string
+    forgotPassword?: boolean
   }): Promise<Teacher> {
-    return prisma.teacher.create({ data })
+    return prisma.teacher.create({
+      data: {
+        name: data.name,
+        username: data.username,
+        password: data.password,
+        ...(data.forgotPassword !== undefined ? { forgotPassword: data.forgotPassword } : {})
+      }
+    })
   }
 
   async delete(id: number): Promise<void> {
@@ -31,10 +39,15 @@ export class TeacherRepository {
     name?: string
     username?: string
     password?: string
+    forgotPassword?: boolean
   }): Promise<Teacher> {
-    return prisma.teacher.update({
+    const updated = await prisma.teacher.update({
       where: { id },
-      data
+      data: {
+        ...data,
+        ...(data.forgotPassword !== undefined ? { forgotPassword: data.forgotPassword } : {})
+      }
     })
+    return updated
   }
 }

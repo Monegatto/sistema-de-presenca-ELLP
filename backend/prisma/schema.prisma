@@ -44,8 +44,9 @@ model Attendance {
 }
 
 model Teacher {
-  id           Int       @id @default(autoincrement())
-  name         String
-  username     String    @unique
-  password     String
+  id              Int       @id @default(autoincrement())
+  name            String
+  username        String    @unique
+  password        String
+  forgotPassword  Boolean   @default(false)
 }

@@ -4,5 +4,6 @@ export class Teacher {
     public name: string,
     public username: string,
     public password: string,
+    public forgotPassword: boolean = false
   ) {}
 }

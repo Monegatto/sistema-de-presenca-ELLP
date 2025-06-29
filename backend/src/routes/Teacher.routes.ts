@@ -22,17 +22,17 @@ teacherRouter.delete('/teachers/:id', authenticateTokenAdmin, async (req, res) =
   }
 })
 
-teacherRouter.get('/teachers/:id', authenticateTokenAdmin, async (req, res) => {
+teacherRouter.get('/teachers/username/:username', async (req, res) => {
   try {
-    await controller.findById(req, res)
+    await controller.findByUsername(req, res)
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' })
   }
 })
 
-teacherRouter.get('/teachers/username/:username', authenticateTokenAdmin, async (req, res) => {
+teacherRouter.get('/teachers/:id', authenticateTokenAdmin, async (req, res) => {
   try {
-    await controller.findByUsername(req, res)
+    await controller.findById(req, res)
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' })
   }
@@ -49,6 +49,14 @@ teacherRouter.get('/teachers', authenticateTokenAdmin, async (req, res) => {
 teacherRouter.put('/teachers/:id', authenticateTokenAdmin, async (req, res) => {
   try {
     await controller.update(req, res)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
+
+teacherRouter.put('/teachers/forgot-password/:username', async (req, res) => {
+  try {
+    await controller.setForgotPassword(req, res)
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' })
   }

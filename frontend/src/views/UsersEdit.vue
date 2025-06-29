@@ -16,6 +16,15 @@
               style="position: absolute; right: 10px; cursor: pointer; color: #888; font-size: 18px;"
             />
           </div>
+          <div style="margin-top: 10px;">
+            <label>
+              Esqueceu a senha?
+              <select v-model="forgotPassword">
+                <option :value="true">Sim</option>
+                <option :value="false">Não</option>
+              </select>
+            </label>
+          </div>
         </div>
         <div class="form-actions">
           <button class="save" type="submit">Salvar Alterações</button>
@@ -40,7 +49,8 @@ export default {
       name: '',
       username: '',
       password: '',
-      showPassword: false
+      showPassword: false,
+      forgotPassword: false
     };
   },
   async mounted() {
@@ -61,6 +71,7 @@ export default {
         this.name = user.name;
         this.username = user.username;
         this.password = user.password;
+        this.forgotPassword = user.forgotPassword;
       } catch (err) {
         alert('Erro ao carregar dados do usuário!');
       }
@@ -73,10 +84,12 @@ export default {
         await api.put(`/teachers/${id}`, {
           name: this.name,
           username: this.username,
-          password: this.password
+          password: this.password,
+          forgotPassword: this.forgotPassword
         });
-        this.$router.push({ name: 'teachers' });
+        this.$router.push({ name: 'users' });
       } catch (err) {
+        console.error('Erro ao salvar alterações:', err);
         alert('Erro ao salvar alterações!');
       }
     },

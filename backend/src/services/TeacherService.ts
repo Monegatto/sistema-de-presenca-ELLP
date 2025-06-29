@@ -8,8 +8,9 @@ export class TeacherService {
     name: string,
     username: string,
     password: string,
+    forgotPassword: boolean = false
   ): Promise<Teacher> {
-    return this.repository.create({ name, username, password})
+    return this.repository.create({ name, username, password, forgotPassword})
   }
 
   async deleteTeacher(id: number): Promise<void> {
@@ -32,6 +33,7 @@ export class TeacherService {
     name?: string
     username?: string
     password?: string
+    forgotPassword?: boolean
   }): Promise<Teacher> {
     return this.repository.update(id, data)
   }

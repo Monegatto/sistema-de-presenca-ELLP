@@ -20,7 +20,7 @@
           </div>
           <div class="actions">
             <button type="submit">Logar</button>
-            <a href="#">Esqueceu a senha?</a>
+            <button type="button" @click="handleForgotPassword">Esqueceu a senha?</button>
           </div>
         </form>
       </div>
@@ -54,6 +54,25 @@ async function handleLogin() {
 
   } catch (error) {
     toast.warning('Usuário ou senha inválidos');
+  }
+}
+
+async function handleForgotPassword() {
+  if (!username.value) {
+    toast.warning('Digite o usuário para recuperar a senha.');
+    return;
+  }
+  try {
+    const res = await api.get(`/teachers/username/${username.value}`);
+    const teacher = res.data;
+    if (teacher.forgotPassword) {
+      toast.info('A solicitação de recuperação já foi feita.');
+      return;
+    }
+    await api.put(`/teachers/forgot-password/${username.value}`);
+    toast.success('Solicitação de recuperação enviada!');
+  } catch (error) {
+    toast.error('Usuário não encontrado ou erro ao solicitar recuperação.');
   }
 }
 </script>

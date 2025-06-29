@@ -23,7 +23,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(teacher, index) in filteredTeachers" :key="teacher.id" @click="handleRouteEdit(teacher.id)">
+                    <tr
+                        v-for="(teacher, index) in filteredTeachers"
+                        :key="teacher.id"
+                        @click="handleRouteEdit(teacher.id)"
+                        :class="{ 'forgot-password-row': teacher.forgotPassword }"
+                    >
                         <td class="number">{{ index + 1 }}</td>
                         <td class="default">{{ teacher.name }}</td>
                         <td class="default">{{ teacher.id }}</td>
@@ -78,3 +83,9 @@ export default {
 </script>
 
 <style scoped src="../assets/usersH.css"></style>
+<style scoped>
+.forgot-password-row {
+    background-color: #ff3b3b !important;
+    color: #fff;
+}
+</style>

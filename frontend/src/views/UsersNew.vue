@@ -60,10 +60,11 @@ export default {
             name: this.name,
             username: this.username,
             password: this.password,
+            forgotPassword: false
         });
         this.$router.push({ name: 'users' });
         } catch (error) {
-            alert(`Erro ao cadastrar usuário: ${error.response?.data?.message || error.message}`);
+          alert(`Erro ao cadastrar usuário: ${error.response?.data?.message || error.message}`);
         }
     }
     }
