@@ -23,6 +23,7 @@ async function logout() {
     if (!confirm) return;
 
     localStorage.removeItem('token')
+    localStorage.removeItem('token_expiration')
     router.push('/')
 }
 </script>

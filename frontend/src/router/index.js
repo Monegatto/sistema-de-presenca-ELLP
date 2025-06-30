@@ -84,7 +84,16 @@ const publicPages = ['/']
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
+  const expiration = localStorage.getItem('token_expiration')
   const authRequired = !publicPages.includes(to.path)
+
+  const now = Date.now();
+
+  if (expiration && now > parseInt(expiration)) {
+    localStorage.removeItem('token')
+    localStorage.removeItem('token_expiration')
+    return next('/')
+  }
 
   if (authRequired && !token) {
     return next('/')

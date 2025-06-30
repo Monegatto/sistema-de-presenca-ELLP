@@ -47,7 +47,12 @@ async function handleLogin() {
     });
 
     const token = response.data.token
-    localStorage.setItem('token', token)
+    const decoded = JSON.parse(atob(token.split('.')[1]));
+    const expiration = decoded.exp * 1000;
+    console.log('Token expira em:', new Date(expiration).toLocaleString());
+
+    localStorage.setItem('token', token);
+    localStorage.setItem('token_expiration', expiration.toString());
 
     router.push('/attendance-listing');
     const hideLayout = ref(false);
