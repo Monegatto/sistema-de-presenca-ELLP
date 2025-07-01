@@ -113,6 +113,7 @@ export default {
         this.$router.push({ name: 'workshops' });
       } catch (error) {
         alert('Erro ao remover oficina!');
+        console.log(error);
       }
     }
   }

@@ -65,7 +65,11 @@ export default {
     methods: {
         async listTeachers() {
             try {
-                const response = await api.get('/teachers');
+                const response = await api.get('/teachers/admin', {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
                 this.teachers = Array.isArray(response.data) ? response.data : [];
             } catch (error) {
                 console.error('Erro ao carregar professores:', error);

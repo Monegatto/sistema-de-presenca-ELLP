@@ -99,7 +99,7 @@ export default {
       const id = this.$route.params.id;
       try {
         await api.delete(`/teachers/${id}`);
-        this.$router.push({ name: 'teachers' });
+        this.$router.push({ name: 'users' });
       } catch (err) {
         alert('Erro ao remover usuário!');
       }

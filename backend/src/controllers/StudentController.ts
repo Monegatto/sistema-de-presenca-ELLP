@@ -71,19 +71,16 @@ export class StudentController {
   }
 
   async remove(req: Request, res: Response) {
-    const id = Number(req.params.id)
-
+    const id = Number(req.params.id);
     if (isNaN(id)) {
-      return res.status(400).json({ error: 'Invalid ID' })
+      return res.status(400).json({ error: 'Invalid ID' });
     }
-
-    const existingStudent = await service.getById(id)
-
-    if (!existingStudent) {
-      return res.status(404).json({ error: 'Student not found' })
+    try {
+      await service.removeStudent(id);
+      return res.status(204).send();
+    } catch (error) {
+      console.error('Error deleting student:', error);
+      return res.status(500).json({ error: 'Error deleting student', detail: error });
     }
-
-    await service.removeStudent(id)
-    return res.status(204).send()
   }
 }

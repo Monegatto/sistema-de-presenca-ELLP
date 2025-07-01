@@ -23,7 +23,7 @@ async function logout() {
     if (!confirm) return;
 
     localStorage.removeItem('token')
-    router.push('/')
+    window.location.reload()
 }
 </script>
 

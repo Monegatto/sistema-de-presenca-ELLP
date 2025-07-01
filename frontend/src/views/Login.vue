@@ -48,6 +48,7 @@ async function handleLogin() {
 
     const token = response.data.token
     localStorage.setItem('token', token)
+    window.location.reload()
 
     router.push('/attendance-listing');
     const hideLayout = ref(false);

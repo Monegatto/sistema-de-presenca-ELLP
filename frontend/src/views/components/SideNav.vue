@@ -18,7 +18,13 @@
           <font-awesome-icon icon="clipboard-list" class="icon" />
           Alunos
         </router-link>
-        <router-link to="/users" class="sidenav-btn" :class="{ active: activeIndex === 3 }" @click="setActive(3)">
+        <router-link
+          v-if="isAdmin"
+          to="/users"
+          class="sidenav-btn"
+          :class="{ active: activeIndex === 3 }"
+          @click="setActive(3)"
+        >
           <font-awesome-icon icon="clipboard-list" class="icon" />
           Usuários
         </router-link>
@@ -35,12 +41,26 @@
 </template>
 
 <script>
+import {jwtDecode} from 'jwt-decode';
+
 export default {
   name: 'SideNav',
   data() {
     return {
       activeIndex: null
     };
+  },
+  computed: {
+    isAdmin() {
+      const token = localStorage.getItem('token');
+      if (!token) return false;
+      try {
+        const decoded = jwtDecode(token);
+        return decoded.userType === 'admin';
+      } catch (e) {
+        return false;
+      }
+    }
   },
   methods: {
     setActive(index) {

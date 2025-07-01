@@ -19,8 +19,16 @@ export class TeacherRepository {
     })
   }
 
-  async delete(id: number): Promise<void> {
-    await prisma.teacher.delete({ where: { id } })
+  async delete(id: number): Promise<boolean> {
+    try {
+      await prisma.teacher.delete({ where: { id } })
+      return true
+    } catch (error: any) {
+      if (error.code === 'P2025') {
+        return false
+      }
+      throw error
+    }
   }
 
   async findByUsername(username: string): Promise<Teacher | null> {

@@ -23,15 +23,20 @@ export class TeacherController {
   }
 
   async remove(req: Request, res: Response) {
-    const id = Number(req.params.id)
+    const id = Number(req.params.id);
+    console.log('Attempting to remove teacher with id:', id);
     if (isNaN(id)) {
-      return res.status(400).json({ error: 'Invalid ID' })
+      return res.status(400).json({ error: 'Invalid ID' });
     }
     try {
-      await service.deleteTeacher(id)
-      return res.status(204).send()
+      const deleted = await service.deleteTeacher(id);
+      if (!deleted) {
+        return res.status(404).json({ error: 'Teacher not found' });
+      }
+      return res.status(204).send();
     } catch (error) {
-      return res.status(404).json({ error: 'Teacher not found' })
+      console.error('Error in remove:', error);
+      return res.status(500).json({ error: 'Internal server error' });
     }
   }
 

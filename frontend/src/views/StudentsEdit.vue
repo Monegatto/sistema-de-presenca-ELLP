@@ -93,7 +93,8 @@ export default {
         await api.delete(`/students/${id}`);
         this.$router.push({ name: 'students' });
       } catch (err) {
-        alert('Erro ao remover students!');
+        alert('Erro ao remover students');
+        console.error('Erro ao remover aluno:', err);
       }
     }
   }

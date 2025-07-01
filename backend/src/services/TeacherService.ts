@@ -13,8 +13,8 @@ export class TeacherService {
     return this.repository.create({ name, username, password, forgotPassword})
   }
 
-  async deleteTeacher(id: number): Promise<void> {
-    await this.repository.delete(id)
+  async deleteTeacher(id: number): Promise<boolean> {
+    return await this.repository.delete(id);
   }
 
   async findTeacherByUsername(username: string): Promise<Teacher | null> {

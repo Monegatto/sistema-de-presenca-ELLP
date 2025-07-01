@@ -57,9 +57,25 @@ export class WorkshopRepository {
   }
 
   async delete(id: number) {
+    const classes = await this.prisma.class.findMany({
+      where: { workshop_id: id },
+      select: { id: true }
+    });
+
+    const classIds = classes.map((c: {id: number}) => c.id);
+
+    await this.prisma.attendance.deleteMany({
+      where: { class_id: { in: classIds } }
+    });
+
+    await this.prisma.class.deleteMany({
+      where: { workshop_id: id }
+    });
+
     const workshop = await this.prisma.workshop.delete({
       where: { id }
-    })
-    return workshop
+    });
+
+    return workshop;
   }
 }

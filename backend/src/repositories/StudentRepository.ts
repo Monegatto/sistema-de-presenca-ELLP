@@ -44,6 +44,9 @@ export class StudentRepository {
   }
 
   async delete(id: number) {
-    await this.prisma.student.delete({ where: { id } })
+    await this.prisma.attendance.deleteMany({
+      where: { student_id: id }
+    });
+    await this.prisma.student.delete({ where: { id } });
   }
 }

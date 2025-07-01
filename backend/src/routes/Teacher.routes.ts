@@ -30,6 +30,14 @@ teacherRouter.get('/teachers/username/:username', async (req, res) => {
   }
 })
 
+teacherRouter.get('/teachers/admin', authenticateTokenAdmin, async (req, res) => {
+  try {
+    await controller.findAll(req, res)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
+
 teacherRouter.get('/teachers/:id', authenticateTokenAdmin, async (req, res) => {
   try {
     await controller.findById(req, res)
@@ -38,7 +46,7 @@ teacherRouter.get('/teachers/:id', authenticateTokenAdmin, async (req, res) => {
   }
 })
 
-teacherRouter.get('/teachers', authenticateTokenAdmin, async (req, res) => {
+teacherRouter.get('/teachers', async (req, res) => {
   try {
     await controller.findAll(req, res)
   } catch (error) {
