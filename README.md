@@ -102,6 +102,16 @@ Para configurar o ambiente de desenvolvimento, siga os passos abaixo:
     npm run dev
     ```
 
+5. **Outras Instruções:**
+
+   Existe uma conta admin fixa dentro do projeto, ela é a conta capaz de adiministrar os usuários e será a unica conta para acessar o sistema na primeira configuração.
+   
+   Credenciais:
+   
+   * User: admin
+   * Senha: password
+        
+
 ## Estrutura do Projeto
 
 O projeto segue a arquitetura **MVC (Model-View-Controller)**, organizando o código de forma a separar responsabilidades entre camadas de dados, lógica de negócio e interface do usuário.
