@@ -5,7 +5,7 @@
   <div class="container">
     <div class="info-section">
         <h1>Sistema de Presença</h1>
-        <p>Controle de Presença EELP - Ensino Lúdico De Lógica de Programação</p>
+        <p>Controle de Presença ELLP - Ensino Lúdico De Lógica de Programação</p>
     </div>
     <div class="login-box">
       <div class="form-section">
